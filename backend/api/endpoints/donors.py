@@ -24,7 +24,7 @@ def create_donor(
         organization_name=donor.organization_name
     )
     
-    current_user.role = "Donor" # Update User Role
+    current_user.role = "Donor" 
     db.add(current_user)
 
     db.add(new_donor)
@@ -37,6 +37,6 @@ def get_donor_dashboard(current_user: models.User = Depends(deps.get_current_use
     donor = db.query(models.Donor).filter(models.Donor.user_id == current_user.id).first()
     if not donor:
         raise HTTPException(status_code=404, detail="Donor profile not found")
-    # Attach name from the User account to the response
+    
     donor.name = current_user.name
     return donor
