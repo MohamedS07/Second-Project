@@ -1,0 +1,456 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #f9fafb;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3b7a57;
+  color: white;
+  padding: 10px 20px;
+  position: relative;
+  height: 50px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.site-name a {
+  font-size: x-large;
+  font-weight: 800;
+  text-decoration: none;
+  color: white;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.toggle {
+  display: none;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  background-color: white;
+  color: black;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.dropdown.left {
+  top: 50px;
+  left: 20px;
+}
+
+.dropdown.right {
+  top: 50px;
+  right: 20px;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: black;
+  transition: background 0.2s;
+}
+
+.dropdown a:hover {
+  background-color: #e6f3e6;
+}
+
+#menu-toggle:checked ~ .dropdown.left {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+#profile-toggle:checked ~ .dropdown.right {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; 
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+.farmer-list {
+  width: 90%;
+  max-width: 1000px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.farmer-card {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  background: #ffffff;
+  padding: 18px 22px;
+  border-radius: 16px;
+  border: 1px solid #e2e2e2;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+  transition: 0.3s ease;
+}
+
+.farmer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.farmer-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  background-color: #e8eee9;
+  border: 2px solid #d6e4d9;
+  object-fit: cover;
+}
+
+.farmer-info h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #2e2e2e;
+  font-weight: 700;
+}
+
+.farmer-info p {
+  margin: 3px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.donate-btn {
+  font-family: 'Poppins', sans-serif;
+  margin-left: auto;
+  background-color: #2e7d32;
+  color: white;
+  font-size: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.donate-btn:hover {
+  background-color: #1b5e20;
+  transform: translateY(-2px);
+}
+    footer {
+  background-color: #3b7a57;
+  color: white;
+  padding: 40px 20px 10px;
+  font-family: "Poppins", sans-serif;
+  margin-top: 50px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+.footer-section-about{
+  position: relative;
+  right: 70px;
+}
+
+.footer-section h2, .footer-section h3 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.footer-section p {
+  color: #f0f0f0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+  color: #f0f0f0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #ffd700;
+}
+
+.social-icons a {
+  font-size: 22px;
+  color: white;
+  margin-right: 10px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+.footer-section-social {
+  text-align: left;
+  position: relative;
+  left: 100px;
+}
+
+.footer-section-social h3 {
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 18px;
+  color: #fff;
+  background: #4a8f68;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+
+.social-icons a.facebook:hover { 
+  background: #1877f2; 
+
+}
+.social-icons a.instagram:hover { 
+  background: #e4405f; 
+}
+.social-icons a.twitter:hover { 
+  background: #1da1f2; 
+}
+
+.social-icons a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+
+.social-icons a:hover {
+  color: white;
+}
+
+.social-icons a:hover {
+  color: #ffd700;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 10px;
+  color: #e0e0e0;
+}
+@media screen and (max-width: 426px) {
+
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .site-name a {
+    font-size: 20px;
+  }
+
+  .icon {
+    font-size: 22px;
+  }
+
+  .dropdown.left,
+  .dropdown.right {
+    width: 80%;
+    left: 10%;
+    right: 10%;
+  }
+ .farmer-list {
+    width: 95%;
+    margin: 20px auto;
+    gap: 18px;
+  }
+
+  .farmer-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .farmer-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .farmer-info h3 {
+    font-size: 17px;
+  }
+
+  .farmer-info p {
+    font-size: 14px;
+  }
+
+  .donate-btn {
+    width: 100%;
+    margin-left: 0;
+    font-size: 14px;
+    padding: 10px;
+  }
+  
+  footer {
+    padding: 25px 10px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .footer-section-social {
+    left: 0;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+  .footer-section-social a{
+    position: relative;
+    right: 30px;
+  }
+
+  .footer-bottom {
+    font-size: 12px;
+  }
+  .social-icons a.facebook:hover { 
+  background: #1877f2; 
+}
+.social-icons a.instagram:hover { 
+  background: #e4405f; 
+}
+.social-icons a.twitter:hover { 
+  background: #1da1f2; 
+}
+
+.social-icons a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+
+.social-icons a:hover {
+  color: white;
+}
+}
+@media screen and (max-width: 769px) {
+.site-name a {
+    font-size: 22px;
+  }
+
+  .farmer-list {
+    width: 92%;
+    gap: 20px;
+  }
+
+  .farmer-card {
+    gap: 18px;
+    padding: 18px;
+  }
+
+  .farmer-img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .farmer-info h3 {
+    font-size: 18px;
+  }
+
+  .donate-btn {
+    font-size: 14px;
+    padding: 10px 18px;
+  }
+
+
+  .footer-section-about {
+    right: 0;
+    text-align: center;
+  }
+  .footer-section-contact{
+    text-align: center;
+    position: relative;
+  }
+.footer-section-contact p{
+  font-size: 13px;
+}
+
+  .footer-section-social {
+    left: 0;
+    text-align: center;
+  }
+.footer-section-social a{
+  position: relative;
+  left: 35px;
+}
+  .footer-container {
+    text-align: center;
+  }
+
+  .social-icons a.facebook:hover { 
+  background: #1877f2; 
+}
+.social-icons a.instagram:hover { 
+  background: #e4405f; 
+}
+.social-icons a.twitter:hover { 
+  background: #1da1f2; 
+}
+
+.social-icons a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+
+.social-icons a:hover {
+  color: white;
+}
+}
