@@ -11,11 +11,11 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     name = Column(String)
     phone = Column(String)
-    role = Column(String, default="user") # user, farmer, donor, ngo, admin
+    role = Column(String, default="user") 
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    # Relationships
+    
     farmer_profile = relationship("Farmer", back_populates="user", uselist=False)
     donor_profile = relationship("Donor", back_populates="user", uselist=False)
     ngo_profile = relationship("NGO", back_populates="user", uselist=False)

@@ -2,8 +2,7 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import os
 
-# Default to local postgres if not specified
-# Try to connect to 'postgres' db to create new db
+
 DATABASE_URL = os.getenv("DATABASE_ROOT_URL", "postgresql://postgres:AcademyRootPassword@localhost/postgres")
 NEW_DB_NAME = "uzhavan_db"
 
@@ -13,7 +12,7 @@ def create_database():
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cursor = conn.cursor()
         
-        # Check if exists
+        
         cursor.execute(f"SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{NEW_DB_NAME}'")
         exists = cursor.fetchone()
         

@@ -49,7 +49,7 @@ def test_api():
         print(f"[FAIL] Register Failed: {resp.text}")
         return
 
-    # Login
+    
     print("[TEST] Logging in...")
     resp = requests.post(f"{BASE_URL}/auth/login", data={
         "username": farmer_email,
@@ -62,7 +62,7 @@ def test_api():
         print(f"[FAIL] Login Failed: {resp.text}")
         return
 
-    # 2. Farmer Registration
+    
     print("[TEST] Creating Farmer Profile...")
     dummy_img = create_dummy_file("test_image.jpg")
     files = {
@@ -70,8 +70,7 @@ def test_api():
         "pan_photo": open(dummy_img, "rb"),
         "loan_detail_photo": open(dummy_img, "rb")
     }
-    # Optional photo
-    # files["photo"] = open(dummy_img, "rb")
+    
 
     data = {
         "name": "Test Farmer",
@@ -89,7 +88,7 @@ def test_api():
     
     resp = requests.post(f"{BASE_URL}/farmers/", data=data, files=files, headers=headers)
     
-    # Close files
+    
     for f in files.values(): f.close()
     
     if resp.status_code == 200:
@@ -97,7 +96,7 @@ def test_api():
     else:
         print(f"[FAIL] Farmer Profile Failed: {resp.text}")
 
-    # 3. Farmer Dashboard
+    
     print("[TEST] Checking Farmer Dashboard...")
     resp = requests.get(f"{BASE_URL}/farmers/dashboard", headers=headers)
     if resp.status_code == 200:
@@ -105,7 +104,7 @@ def test_api():
     else:
         print(f"[FAIL] Farmer Dashboard Failed: {resp.text}")
 
-    # 4. Farmer List
+    
     print("[TEST] Checking Farmer List...")
     resp = requests.get(f"{BASE_URL}/farmers/")
     if resp.status_code == 200:
@@ -117,17 +116,17 @@ def test_api():
     else:
         print(f"[FAIL] Farmer List Failed: {resp.text}")
 
-    # 5. Donor Flow
+    
     print("\n[TEST] Registering new user (Donor)...")
     donor_email = get_random_email()
     
-    # Register Donor
+    
     requests.post(f"{BASE_URL}/auth/register", json={"email": donor_email, "password": password, "name": "Test Donor", "phone": "111"})
-    # Login Donor
+    
     resp = requests.post(f"{BASE_URL}/auth/login", data={"username": donor_email, "password": password})
     donor_token = resp.json()["access_token"]
     
-    # Create Donor Profile
+    
     print("[TEST] Creating Donor Profile...")
     donor_headers = {"Authorization": f"Bearer {donor_token}"}
     resp = requests.post(f"{BASE_URL}/donors/", json={
@@ -140,13 +139,13 @@ def test_api():
     else:
          print(f"[FAIL] Donor Profile Failed: {resp.text}")
 
-    # Donor Dashboard
+    
     print("[TEST] Checking Donor Dashboard...")
     resp = requests.get(f"{BASE_URL}/donors/dashboard", headers=donor_headers)
     if resp.status_code == 200:
         print("[OK] Donor Dashboard Accessed (Endpoints: 9)")
 
-    # Payment Test (Donor -> Farmer)
+    
     print("\n[TEST] Processing Payment (Donor -> Farmer)...")
     try:
         farmer_id = farmers[-1]['id']
@@ -163,14 +162,14 @@ def test_api():
     except Exception as e:
         print(f"[FAIL] Payment Test Error: {e}")
 
-    # 6. NGO Flow
+    
     print("\n[TEST] Registering new user (NGO)...")
     ngo_email = get_random_email()
     requests.post(f"{BASE_URL}/auth/register", json={"email": ngo_email, "password": password, "name": "Test NGO", "phone": "222"})
     resp = requests.post(f"{BASE_URL}/auth/login", data={"username": ngo_email, "password": password})
     ngo_token = resp.json()["access_token"]
     
-    # Create NGO Profile
+    
     print("[TEST] Creating NGO Profile...")
     ngo_headers = {"Authorization": f"Bearer {ngo_token}"}
     files = {"proof_document": open(dummy_img, "rb")}
@@ -189,7 +188,7 @@ def test_api():
     else:
          print(f"[FAIL] NGO Profile Failed: {resp.text}")
          
-    # NGO Dashboard
+    
     print("[TEST] Checking NGO Dashboard...")
     resp = requests.get(f"{BASE_URL}/ngos/dashboard", headers=ngo_headers)
     if resp.status_code == 200:
@@ -197,8 +196,8 @@ def test_api():
         
     print("\n[INFO] Admin APIs (Endpoints 6, 7) require 'admin' role. Skipped automated check, but endpoints exist at /admin/...")
     
-    # Verify specific details API (Validation Page equivalent)
-    # Using the farmer created earlier
+    
+    
     try:
         farmer_id = farmers[-1]['id'] # Get ID of last farmer
         print(f"[TEST] Checking Specific Farmer Details (ID: {farmer_id})...")
@@ -210,7 +209,7 @@ def test_api():
     except:
         pass
 
-    # Cleanup
+    
     try:
         os.remove("test_image.jpg")
     except:

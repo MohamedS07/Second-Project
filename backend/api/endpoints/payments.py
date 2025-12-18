@@ -13,18 +13,18 @@ def create_payment(
     current_user: models.User = Depends(deps.get_current_user),
     db: Session = Depends(database.get_db)
 ):
-    # Verify User is a Donor
+    
     donor = db.query(models.Donor).filter(models.Donor.user_id == current_user.id).first()
     if not donor:
         raise HTTPException(status_code=400, detail="Only registered donors can make payments")
 
-    # Verify Farmer exists
+    
     farmer = db.query(models.Farmer).filter(models.Farmer.id == payment.farmer_id).first()
     if not farmer:
         raise HTTPException(status_code=404, detail="Farmer not found")
 
-    # Create Payment
-    transaction_id = str(uuid.uuid4()) # Mock Transaction ID
+    
+    transaction_id = str(uuid.uuid4()) 
     
     new_payment = models.Payment(
         donor_id=donor.id,

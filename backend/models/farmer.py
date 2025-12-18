@@ -17,7 +17,7 @@ class Farmer(Base):
     bank_account_no = Column(String)
     bank_ifsc = Column(String)
     
-    # File Paths
+    
     photo_url = Column(String)
     aadhar_photo_url = Column(String)
     pan_photo_url = Column(String)

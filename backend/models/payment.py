@@ -10,8 +10,8 @@ class Payment(Base):
     farmer_id = Column(Integer, ForeignKey("farmers.id"))
     
     amount = Column(Float, nullable=False)
-    payment_method = Column(String, nullable=False) # upi, card, netbanking
-    transaction_id = Column(String, unique=True, index=True) # Mock transaction ID
+    payment_method = Column(String, nullable=False) 
+    transaction_id = Column(String, unique=True, index=True) 
     status = Column(String, default="Success")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 

@@ -43,7 +43,7 @@ def create_ngo(
         is_approved=False
     )
     
-    current_user.role = "NGO" # Update User Role
+    current_user.role = "NGO" 
     db.add(current_user)
     
     db.add(new_ngo)
