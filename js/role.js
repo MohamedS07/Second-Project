@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'sign-up.html'; // Redirect to login if not authenticated
+        window.location.href = 'sign-up.html'; 
     }
 
     if (farmerBtn) {

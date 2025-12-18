@@ -9,12 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('role');
                 localStorage.removeItem('user_id');
-                window.location.href = '../index.html'; // Go to home.Adjust path if needed (e.g. if in root)
+                window.location.href = '../index.html'; 
             });
         }
     });
 
-    // Handle "Home" link if user is logged in? 
-    // Maybe checking token on every page load to redirect non-logged in users? 
-    // Already doing that in dashboard JS files.
+    
 });

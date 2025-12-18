@@ -21,7 +21,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         });
 
         if (response.ok) {
-            // Auto-login to get the token
+            
             const loginResponse = await fetch(`${CONFIG.API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {

@@ -15,10 +15,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('farmerName').innerText = data.name;
             document.getElementById('appStatus').innerText = data.verification_status;
 
-            // Pending Amount calculation logic (Mock for now or needs update in backend)
-            // Assuming loan_amount is the total needed
+            
             const totalLoan = parseFloat(data.loan_amount) || 0;
-            // Need an API to get received amount (Not implemented in backend yet, defaulting to 0)
+            
             const received = 0;
 
             document.getElementById('amountReceived').innerText = received;

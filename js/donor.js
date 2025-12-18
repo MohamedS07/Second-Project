@@ -8,16 +8,15 @@ document.getElementById('donorform').addEventListener('submit', async function (
         return;
     }
 
-    // Manual selection because IDs/Names might be missing in HTML
+    
     const inputs = this.querySelectorAll('input');
     const select = this.querySelector('select');
 
-    // Assuming order based on HTML inspection: 
-    // Name (0), State (Select), Email (1), Phone (2), Radio (3/4), OrgName (5)
+    
 
     const donorData = {
         name: inputs[0].value,
-        email: inputs[1].value, // Sending email just in case, though schema might ignore or we update schema
+        email: inputs[1].value, 
         phone_number: inputs[2].value,
         state: select.value,
         apply_type: this.querySelector('input[name="apply_type"]:checked')?.value || "Individual",

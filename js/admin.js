@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok) {
             const farmers = await response.json();
             const listContainer = document.querySelector('.list-container');
-            listContainer.innerHTML = '<h2>Pending Farmer Validations</h2>'; // Reset and add title
+            listContainer.innerHTML = '<h2>Pending Farmer Validations</h2>'; 
 
             if (farmers.length === 0) {
                 listContainer.innerHTML += '<p>No pending validations.</p>';
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             farmers.forEach(farmer => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                // Link to validation page with ID
+                
                 card.innerHTML = `
                     <a href="validation.html?id=${farmer.id}" style="text-decoration: none; color: inherit; display: block;">
                         <h3>${farmer.name}</h3>

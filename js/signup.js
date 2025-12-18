@@ -11,21 +11,21 @@ document.getElementById('signup-form').addEventListener('submit', async function
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
-                username: email, // FastAPI OAuth2PasswordRequestForm expects 'username'
+                username: email, 
                 password: password
             })
         });
 
         if (response.ok) {
             const data = await response.json();
-            // Store token and role
+           
             localStorage.setItem('token', data.access_token);
             localStorage.setItem('role', data.role);
             localStorage.setItem('user_id', data.user_id);
 
             alert('Login Successful!');
 
-            // Smart Redirect based on Role
+            
             if (data.role === 'Farmer') {
                 window.location.href = 'farmer-dashboard.html';
             } else if (data.role === 'Donor') {
@@ -35,7 +35,7 @@ document.getElementById('signup-form').addEventListener('submit', async function
             } else if (data.role === 'admin') {
                 window.location.href = 'admin.html';
             } else {
-                // If role is just 'user', they haven't selected a specific role yet
+                
                 window.location.href = 'role.html';
             }
         } else {

@@ -2,9 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('farmerListContainer');
 
     try {
-        const response = await fetch(`${CONFIG.API_URL}/farmers/`); // Assuming public or needs auth? 
-        // Backend /farmers/ is public? Let's check. 
-        // Code check: @router.get("/", response_model=list[schemas.Farmer]) -> No Depends(deps.get_current_user) -> PUBLIC. Good.
+        const response = await fetch(`${CONFIG.API_URL}/farmers/`); 
 
         if (response.ok) {
             const farmers = await response.json();
