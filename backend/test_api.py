@@ -31,12 +31,12 @@ def test_api():
     except Exception as e:
         print(f"[WARN] Failed to connect: {e}")
 
-    # 1. Register & Login (User/Farmer)
+    
     print("[TEST] Registering new user (Farmer)...")
     farmer_email = get_random_email()
     password = "password123"
     
-    # Register
+    
     resp = requests.post(f"{BASE_URL}/auth/register", json={
         "email": farmer_email,
         "password": password,
@@ -199,7 +199,7 @@ def test_api():
     
     
     try:
-        farmer_id = farmers[-1]['id'] # Get ID of last farmer
+        farmer_id = farmers[-1]['id'] 
         print(f"[TEST] Checking Specific Farmer Details (ID: {farmer_id})...")
         resp = requests.get(f"{BASE_URL}/farmers/{farmer_id}")
         if resp.status_code == 200:
