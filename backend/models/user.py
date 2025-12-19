@@ -1,21 +1,18 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func
+from sqlalchemy import Column, Integer, String, Boolean, Enum
 from ..core.database import Base
+import enum
+
+class UserRole(str, enum.Enum):
+    ADMIN = "admin"
+    FARMER = "farmer"
+    DONOR = "donor"
+    NGO = "ngo"
 
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True, nullable=False)
-    hashed_password = Column(String, nullable=False)
-    name = Column(String)
-    phone = Column(String)
-    role = Column(String, default="user") 
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    role = Column(String)  # Storing role as string for simplicity
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-
-    
-    farmer_profile = relationship("Farmer", back_populates="user", uselist=False)
-    donor_profile = relationship("Donor", back_populates="user", uselist=False)
-    ngo_profile = relationship("NGO", back_populates="user", uselist=False)

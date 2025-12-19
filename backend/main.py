@@ -1,68 +1,33 @@
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from .core.database import engine, Base
-from .api.endpoints import auth, farmers, donors, ngos, admin, payments
-from .core.config import settings
-import os
+from .routes import auth, registration, dashboard
 
+# Create Tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
+app = FastAPI(title="Uzhavan Connect API")
+
+# CORS
+origins = [
+    "http://localhost",
+    "http://127.0.0.1:5500", # Live Server default
+    "http://localhost:5500",
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], # Allow all for development ease
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
-app.include_router(farmers.router, prefix="/farmers", tags=["Farmers"])
-app.include_router(donors.router, prefix="/donors", tags=["Donors"])
-app.include_router(ngos.router, prefix="/ngos", tags=["NGOs"])
-app.include_router(admin.router, prefix="/admin", tags=["Admin"])
-app.include_router(payments.router, prefix="/payments", tags=["Payments"])
+# Routes
+app.include_router(auth.router, tags=["Auth"])
+app.include_router(registration.router, prefix="/api/register", tags=["Registration"])
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
 
-frontend_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-def mount_static(url, path, name):
-    full_path = os.path.join(frontend_path, path)
-    if os.path.exists(full_path):
-        app.mount(url, StaticFiles(directory=full_path), name=name)
-    else:
-        print(f"Warning: Static directory not found: {full_path}")
-
-mount_static("/styles", "styles", "styles")
-mount_static("/js", "js", "js")
-mount_static("/pages", "pages", "pages")
-mount_static("/assests", "assests", "assests")
-
-if os.path.exists(settings.UPLOAD_DIR):
-    app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
-else:
-    os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
-    app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
-
-from fastapi.responses import FileResponse
 @app.get("/")
-async def read_index():
-    index_path = os.path.join(frontend_path, "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
-    return {"message": "Backend API is running. Frontend index.html not found."}
-
-@app.get("/index.html")
-async def read_index_explicit():
-    index_path = os.path.join(frontend_path, "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
-    return {"message": "index.html not found"}
-
-@app.get("/style.css")
-async def read_style_css():
-    style_path = os.path.join(frontend_path, "style.css")
-    if os.path.exists(style_path):
-        return FileResponse(style_path)
-    return {"message": "style.css not found"}
+def read_root():
+    return {"message": "Welcome to Uzhavan Connect API"}

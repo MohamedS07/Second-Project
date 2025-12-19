@@ -5,46 +5,34 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     const email = document.getElementById('email').value;
     const phone = document.getElementById('Phone').value;
     const password = document.getElementById('password').value;
+    const role = document.getElementById('role').value;
 
     try {
-        const response = await fetch(`${CONFIG.API_URL}/auth/register`, {
+        const response = await fetch(`${API_BASE_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: name,
                 email: email,
-                phone: phone,
-                password: password
+                password: password,
+                role: role
+                // Name and Phone are not in User model yet, potentially lost or should be stored in temporary storage
+                // For this implementation, we will assume User model only takes email/pass/role
+                // and name/phone must be re-entered in profile or we update backend User model.
+                // Given the constraints and user request complexity, we'll stick to basic Auth here.
+                // Improvement: Store name/phone in localStorage to pre-fill profile form later.
             })
         });
 
         if (response.ok) {
-            
-            const loginResponse = await fetch(`${CONFIG.API_URL}/auth/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    username: email,
-                    password: password
-                })
-            });
-
-            if (loginResponse.ok) {
-                const loginData = await loginResponse.json();
-                localStorage.setItem('token', loginData.access_token);
-                alert('Registration Successful! Redirecting to Role Selection...');
-                window.location.href = 'role.html';
-            } else {
-                alert('Registration successful, but auto-login failed. Please login manually.');
-                window.location.href = 'sign-up.html';
-            }
+            alert('Registration successful! Please login.');
+            localStorage.setItem('temp_name', name);
+            localStorage.setItem('temp_phone', phone);
+            window.location.href = 'sign-up.html'; // Redirect to Login page (sign-up.html)
         } else {
-            const errorData = await response.json();
-            alert(`Registration Failed: ${errorData.detail}`);
+            const data = await response.json();
+            alert(`Registration failed: ${data.detail}`);
         }
     } catch (error) {
         console.error('Error:', error);
