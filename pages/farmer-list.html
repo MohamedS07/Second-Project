@@ -4,18 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer List - Uzhavan Connect</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet" />
-  <title>Farmer List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles/style-farmer-list.css">
 </head>
 
 <body>
-
   <header class="navbar">
     <input type="checkbox" id="menu-toggle" class="toggle">
     <label for="menu-toggle" class="icon">&#9776;</label>
@@ -34,11 +31,41 @@
     </div>
 
     <div class="dropdown right">
-      <a href="#">Logout</a>
+      <a href="./register.html">Register</a>
+      <a href="./sign-up.html">Sign Up</a>
     </div>
   </header>
-  <main class="farmer-list" id="farmerListContainer">
-  </main>
+
+  <section class="farmer-list">
+    <!-- Example Static Card 1 -->
+    <div class="farmer-card">
+      <!-- <img src="" alt="Famer" class="farmer-img"> -->
+      <!-- Removed placeholder IMG src to prevent broken image icon, or can use a placeholder service -->
+      <div class="farmer-img" style="display:flex;justify-content:center;align-items:center;color:#888;">
+        <i class="fas fa-user" style="font-size: 40px;"></i>
+      </div>
+
+      <div class="farmer-info">
+        <h3>Ramesh Kumar</h3>
+        <p>Village: Thanjavur</p>
+        <p>Crop: Rice (Paddy)</p>
+      </div>
+      <button class="donate-btn" onclick="window.location.href='payment.html'">Donate</button>
+    </div>
+
+    <div class="farmer-card">
+      <div class="farmer-img" style="display:flex;justify-content:center;align-items:center;color:#888;">
+        <i class="fas fa-user" style="font-size: 40px;"></i>
+      </div>
+      <div class="farmer-info">
+        <h3>Suresh</h3>
+        <p>Village: Madurai</p>
+        <p>Crop: Sugarcane</p>
+      </div>
+      <button class="donate-btn" onclick="window.location.href='payment.html'">Donate</button>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-container">
       <div class="footer-section-about">
@@ -75,9 +102,6 @@
       <p>© 2025 Uzhavan Connect | Designed for Farmers’ Empowerment </p>
     </div>
   </footer>
-  <script src="../js/config.js"></script>
-  <script src="../js/farmer-list.js"></script>
-  <script src="../js/logout.js"></script>
 </body>
 
 </html>

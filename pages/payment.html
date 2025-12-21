@@ -4,23 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Uzhavan Connect</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet" />
-  <title>Uzhavan Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles/style-payment.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
-
   <header class="navbar">
     <input type="checkbox" id="menu-toggle" class="toggle">
     <label for="menu-toggle" class="icon">&#9776;</label>
     <div class="site-name"><a href="/index.html">Uzhavan Connect</a></div>
+
     <input type="checkbox" id="profile-toggle" class="toggle">
     <label for="profile-toggle" class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
         viewBox="0 0 16 16">
@@ -34,46 +31,39 @@
     </div>
 
     <div class="dropdown right">
-      <a href="./donor-dashboard.html">Dashboard</a>
-      <a href="#">Logout</a>
+      <a href="./register.html">Register</a>
+      <a href="./sign-up.html">Sign Up</a>
     </div>
   </header>
 
   <main>
     <div class="payment-container">
       <h2>Payment Details</h2>
-
-      <form id="paymentForm">
-
+      <form>
         <div class="input-group">
-          <label>Name</label><br />
-          <input type="text" id="farmerName" readonly>
-        </div>
-
-        <div class="input-group">
-          <label>Account No</label><br />
-          <input type="text" id="farmerAccount" readonly>
-        </div>
-
-        <div class="input-group">
-          <label>Payment Method</label><br />
+          <label>Payment Method</label>
           <select id="method">
+            <option value="card">Credit/Debit Card</option>
             <option value="upi">UPI</option>
-            <option value="card">Card</option>
-            <option value="netbanking">Net Banking</option>
           </select>
         </div>
-
         <div class="input-group">
-          <label>Amount</label><br />
-          <input type="number" id="amount" placeholder="₹ Amount" required>
+          <label>Card Number</label>
+          <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX">
         </div>
-
-        <button type="button" id="payBtn">Pay</button>
+        <div class="input-group">
+          <label>Expiry Date</label>
+          <input type="text" placeholder="MM/YY">
+        </div>
+        <div class="input-group">
+          <label>CVV</label>
+          <input type="password" placeholder="123">
+        </div>
+        <button id="payBtn" type="button">Pay Now</button>
       </form>
     </div>
-
   </main>
+
   <footer>
     <div class="footer-container">
       <div class="footer-section-about">
@@ -81,7 +71,7 @@
         <p>Empowering Tamil Nadu’s farmers through transparent crowdfunding and collective community support.</p>
       </div>
 
-      <div class="footer-section-links">
+      <div class="footer-section links">
         <h3>Quick Links</h3>
         <ul>
           <li><a href="/index.html">Home</a></li>
@@ -90,7 +80,7 @@
         </ul>
       </div>
 
-      <div class="footer-section-contact">
+      <div class="footer-section contact">
         <h3>Contact Us</h3>
         <p>📞 +91 98765 43210</p>
         <p>📧 support@uzhavanconnect.org</p>
@@ -99,9 +89,9 @@
       <div class="footer-section-social">
         <h3>Follow Us</h3>
         <div class="social-icons">
-          <a href="https://www.facebook.com" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://twitter.com" target="_blank" class="twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank" class="twitter"><i class="fab fa-x-twitter"></i></a>
         </div>
       </div>
     </div>
@@ -110,9 +100,6 @@
       <p>© 2025 Uzhavan Connect | Designed for Farmers’ Empowerment </p>
     </div>
   </footer>
-  <script src="../js/config.js"></script>
-  <script src="../js/payment.js"></script>
-  <script src="../js/logout.js"></script>
 </body>
 
 </html>

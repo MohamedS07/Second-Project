@@ -135,6 +135,7 @@ label, .section-label {
 
 input[type="text"],
 input[type="file"],
+input[type="email"],
 select,
 textarea {
   width: 100%;
