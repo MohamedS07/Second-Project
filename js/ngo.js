@@ -25,7 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     const result = await response.json();
-                    alert('NGO Registration Submitted Successfully!');
+
+                    if (result.access_token) {
+                        localStorage.setItem('token', result.access_token);
+                    }
+
                     window.location.href = 'ngo-dashboard.html';
                 } else {
                     let errorMessage = "Unknown Error";

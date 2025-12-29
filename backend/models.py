@@ -10,7 +10,7 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     phone = Column(String)
     hashed_password = Column(String)
-    role = Column(String) # "farmer", "donor", "ngo", "admin", "user"
+    role = Column(String) 
     is_active = Column(Boolean, default=True)
 
     farmer_profile = relationship("Farmer", back_populates="user", uselist=False)
@@ -35,14 +35,14 @@ class Farmer(Base):
     apply_type = Column(String)
     ngo_name_ref = Column(String, nullable=True)
     
-    # File paths
+    
     photo_path = Column(String, nullable=True)
     aadhar_photo_path = Column(String, nullable=True)
     pan_photo_path = Column(String, nullable=True)
     loan_detail_photo_path = Column(String, nullable=True)
 
     is_approved = Column(Boolean, default=False)
-    amount_raised = Column(Integer, default=0) # New field to track raised funds
+    amount_raised = Column(Integer, default=0) 
     
     user = relationship("User", back_populates="farmer_profile")
     payments = relationship("Payment", back_populates="farmer")
@@ -56,7 +56,7 @@ class Donor(Base):
     name = Column(String, index=True)
     state = Column(String)
     phone = Column(String)
-    email = Column(String, index=True) # Keeping email here too as per form if needed, or link to User
+    email = Column(String, index=True) 
     apply_type = Column(String)
     organization_name = Column(String, nullable=True)
     
@@ -87,7 +87,7 @@ class Payment(Base):
     donor_id = Column(Integer, ForeignKey("donors.id"))
     farmer_id = Column(Integer, ForeignKey("farmers.id"))
     amount = Column(Integer)
-    payment_method = Column(String) # UPI, Card, NetBanking
+    payment_method = Column(String) 
     transaction_date = Column(Date)
 
     farmer = relationship("Farmer", back_populates="payments")

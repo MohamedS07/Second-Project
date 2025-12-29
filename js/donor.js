@@ -27,7 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     const result = await response.json();
-                    alert('Donor Registration Successful!');
+
+                    if (result.access_token) {
+                        localStorage.setItem('token', result.access_token);
+                    }
+
                     window.location.href = 'donor-dashboard.html';
                 } else {
                     let errorMessage = "Unknown Error";

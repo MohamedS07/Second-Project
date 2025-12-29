@@ -35,7 +35,7 @@ def register_ngo(
     if current_user.ngo_profile:
         raise HTTPException(status_code=400, detail="You already have an NGO profile")
     
-    # Check if reg number unique
+    
     if db.query(models.NGO).filter(models.NGO.reg_number == reg_number).first():
          raise HTTPException(status_code=400, detail="NGO Registration number already exists")
 
@@ -56,6 +56,11 @@ def register_ngo(
     db.add(current_user)
     db.commit()
     db.refresh(new_ngo)
+    # Generate new access token for the updated role
+    access_token = auth.create_access_token(data={"sub": current_user.email})
+    new_ngo.access_token = access_token
+    new_ngo.token_type = "bearer"
+    
     return new_ngo
 
 @router.get("/me", response_model=schemas.NGOResponse)
@@ -69,7 +74,7 @@ def get_my_farmers(db: Session = Depends(database.get_db), current_user: models.
     if not current_user.ngo_profile:
         raise HTTPException(status_code=403, detail="Not an NGO")
     
-    # Matching NGO Name (Fragile but per requirement)
+    
     ngo_name = current_user.ngo_profile.name
     
     farmers = db.query(models.Farmer).filter(models.Farmer.ngo_name_ref == ngo_name).all()

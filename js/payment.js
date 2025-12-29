@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // 1. Fetch Farmer Details
+    
     try {
         const response = await fetch(`${API_BASE_URL}/api/farmers/${farmerId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    // 2. Handle Payment Method Toggles
+    
     const methodRadios = document.querySelectorAll('input[name="paymentMethod"]');
     const sections = {
         'UPI': document.getElementById('upi-fields'),
@@ -43,14 +43,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     methodRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
-            // Hide all
+            
             Object.values(sections).forEach(el => el.style.display = 'none');
-            // Show selected
+            
             sections[e.target.value].style.display = 'block';
         });
     });
 
-    // 3. Handle Payment Submission
+    
     document.getElementById('payBtn').addEventListener('click', async () => {
         const amount = document.getElementById('amountInput').value;
         const method = document.querySelector('input[name="paymentMethod"]:checked').value;

@@ -3,14 +3,14 @@ from sqlalchemy import MetaData
 
 print("Resetting Database...")
 try:
-    # Reflect current DB state to drop even unknown tables if they exist and we want a clean slate
+    
     metadata = MetaData()
     metadata.reflect(bind=database.engine)
     
     print(f"Dropping all reflected tables: {list(metadata.tables.keys())}")
     metadata.drop_all(bind=database.engine)
     
-    # Also ensure models' tables are recreated
+    
     print("Creating tables from models...")
     models.Base.metadata.create_all(bind=database.engine)
     

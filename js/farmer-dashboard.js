@@ -13,15 +13,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok) {
             const farmer = await response.json();
 
-            // Name
+            
             document.getElementById('farmerName').innerText = farmer.name;
 
-            // Status
+            
             const statusEl = document.getElementById('appStatus');
             statusEl.innerText = farmer.is_approved ? 'Approved' : 'Pending';
             statusEl.style.color = farmer.is_approved ? 'green' : 'orange';
 
-            // Financial Stats
+            
             const loanAmount = parseFloat(farmer.loan_amount) || 0;
             const amountRaised = farmer.amount_raised || 0;
             const pendingAmount = loanAmount - amountRaised;

@@ -8,12 +8,12 @@ from sqlalchemy.orm import Session
 from . import schemas, database, models
 import hashlib 
 
-# Secret key for JWT (Change this in production!)
+
 SECRET_KEY = "uzhavan_connect_secret_key_change_me"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 300
 
-# Using pbkdf2_sha256 to avoid bcrypt dependency/version issues on Windows
+
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
 

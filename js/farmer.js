@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const formData = new FormData(farmerForm);
-            // files are already in formData since inputs have name="..."
+
 
             try {
                 const response = await fetch(`${API_BASE_URL}/api/farmers/apply`, {
@@ -26,7 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     const result = await response.json();
-                    alert('Farmer Application Submitted Successfully!');
+
+                    if (result.access_token) {
+                        localStorage.setItem('token', result.access_token);
+                    }
+
                     window.location.href = 'farmer-dashboard.html';
                 } else {
                     let errorMessage = "Unknown Error";

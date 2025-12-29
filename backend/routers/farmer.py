@@ -13,7 +13,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 def save_file(file: UploadFile, user_id: int, file_type: str):
     if not file:
         return None
-    # secure_filename structure
+    
     filename = f"{user_id}_{file_type}_{file.filename}"
     file_path = os.path.join(UPLOAD_DIR, filename)
     with open(file_path, "wb") as buffer:
@@ -28,7 +28,7 @@ def apply_as_farmer(
     address: str = Form(...),
     phone: str = Form(...),
     loan_amount: str = Form(...),
-    last_date: str = Form(...), # Handling as string, then convert if needed
+    last_date: str = Form(...), 
     bank_account_no: str = Form(...),
     bank_ifsc: str = Form(...),
     apply_type: str = Form(...),
@@ -42,11 +42,11 @@ def apply_as_farmer(
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(auth.get_current_user)
 ):
-    # Check if profile already exists
+    
     if current_user.farmer_profile:
         raise HTTPException(status_code=400, detail="You have already applied as a Farmer.")
     
-    # Save files
+    
     photo_path = save_file(photo, current_user.id, "photo") if photo else None
     aadhar_path = save_file(aadhar_photo, current_user.id, "aadhar")
     pan_path = save_file(pan_photo, current_user.id, "pan")
@@ -60,7 +60,7 @@ def apply_as_farmer(
         address=address,
         phone=phone,
         loan_amount=loan_amount,
-        last_date=last_date, # Verify strict date format if needed
+        last_date=last_date, 
         bank_account_no=bank_account_no,
         bank_ifsc=bank_ifsc,
         apply_type=apply_type,
@@ -77,6 +77,12 @@ def apply_as_farmer(
     db.add(current_user)
     db.commit()
     db.refresh(new_farmer)
+    
+    # Generate new access token for the updated role
+    access_token = auth.create_access_token(data={"sub": current_user.email})
+    new_farmer.access_token = access_token
+    new_farmer.token_type = "bearer"
+    
     return new_farmer
 
 @router.get("/list", response_model=List[schemas.FarmerResponse])
@@ -86,7 +92,7 @@ def get_farmers(skip: int = 0, limit: int = 100, approved_only: bool = False, db
     if approved_only:
         query = query.filter(models.Farmer.is_approved == True)
         
-    # Sorting by 'last_date' ascending (Soonest deadline first)
+    
     farmers = query.order_by(models.Farmer.last_date.asc()).offset(skip).limit(limit).all()
     return farmers
 
@@ -98,8 +104,7 @@ def get_my_farmer_profile(current_user: models.User = Depends(auth.get_current_u
 
 @router.delete("/{farmer_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_farmer(farmer_id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
-    # Assuming only admin or the user themselves can delete
-    # For simplicity, let's allow "admin" role or if it matches the current user's profile
+    
     
     farmer_to_delete = db.query(models.Farmer).filter(models.Farmer.id == farmer_id).first()
     if not farmer_to_delete:

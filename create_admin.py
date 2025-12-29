@@ -8,23 +8,24 @@ def create_admin_user():
         password = input("Enter Admin Password: ")
         name = input("Enter Admin Name: ")
         
-        # Check if user exists
+        
         existing_user = db.query(models.User).filter(models.User.email == email).first()
         if existing_user:
-            print("User already exists. Updating role to 'admin'...")
+            print("User already exists. Updating role and password...")
             existing_user.role = "admin"
+            existing_user.hashed_password = auth.get_password_hash(password)
             db.commit()
-            print("User role updated to admin.")
+            print("Admin credentials updated successfully.")
             return
 
-        # Create new admin
+        
         hashed_password = auth.get_password_hash(password)
         new_admin = models.User(
             email=email,
             name=name,
             hashed_password=hashed_password,
             role="admin",
-            phone="0000000000" # Dummy phone
+            phone="0000000000" 
         )
         db.add(new_admin)
         db.commit()

@@ -94,15 +94,24 @@ body {
 }
 
 .chart-container {
-  height: 400px;
-  width: 90%;
+  height: auto;
+  min-height: 400px;
+  width: 1270px;
   background-color: #eaf6ea;
   border-radius: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 35px;
-  margin-left: 70px;
+  margin: 35px auto;
+  padding: 20px;
+}
+
+#myPieChart {
+  max-width: 300px;
+  max-height: 300px;
+  width: 100%;
+  height: auto;
 }
 
 .list-container {

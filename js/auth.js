@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Register Form Handling
+    
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     const data = await response.json();
 
-                    // Auto-login: Save token
+                    
                     localStorage.setItem('token', data.access_token);
 
                     alert('Registration Successful!');
-                    // Redirect to Role Selection
+                    
                     window.location.href = 'role.html';
                 } else {
                     const data = await response.json();
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Login Form Handling
+    
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data.profile_type === 'farmer') window.location.href = 'farmer-dashboard.html';
                         else if (data.profile_type === 'donor') window.location.href = 'donor-dashboard.html';
                         else if (data.profile_type === 'ngo') window.location.href = 'ngo-dashboard.html';
-                        else window.location.href = 'role.html'; // Fallback
+                        else window.location.href = 'role.html'; 
                     } else {
-                        // New user, no profile
+                        
                         window.location.href = 'role.html';
                     }
                 } else {

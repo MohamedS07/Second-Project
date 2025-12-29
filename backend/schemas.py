@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional, List
 from datetime import date
 
-# Token Schemas
+
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -13,7 +13,7 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     email: Optional[str] = None
 
-# User Schemas
+
 class UserBase(BaseModel):
     email: str
     name: str
@@ -34,7 +34,7 @@ class UserResponse(UserBase):
     class Config:
         from_attributes = True
 
-# Farmer Schemas
+
 class FarmerBase(BaseModel):
     name: str
     village: str
@@ -49,7 +49,7 @@ class FarmerBase(BaseModel):
     ngo_name_ref: Optional[str] = None
 
 class FarmerCreate(FarmerBase):
-    pass # Files are handled separately in the router
+    pass 
 
 class FarmerResponse(FarmerBase):
     id: int
@@ -61,11 +61,14 @@ class FarmerResponse(FarmerBase):
     loan_detail_photo_path: Optional[str]
     is_approved: bool
     amount_raised: int = 0
+    
+    access_token: Optional[str] = None
+    token_type: Optional[str] = None
 
     class Config:
         from_attributes = True
 
-# Donor Schemas
+
 class DonorBase(BaseModel):
     name: str
     state: str
@@ -80,11 +83,14 @@ class DonorCreate(DonorBase):
 class DonorResponse(DonorBase):
     id: int
     user_id: int
+    
+    access_token: Optional[str] = None
+    token_type: Optional[str] = None
 
     class Config:
         from_attributes = True
 
-# NGO Schemas
+
 class NGOBase(BaseModel):
     name: str
     reg_number: str
@@ -106,7 +112,7 @@ class NGOResponse(NGOBase):
     class Config:
         from_attributes = True
 
-# Payment Schemas
+
 class PaymentCreate(BaseModel):
     farmer_id: int
     amount: int

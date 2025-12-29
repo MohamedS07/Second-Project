@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Fetch Farmer Details
+    
     try {
         const response = await fetch(`${API_BASE_URL}/api/farmers/${farmerId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    // Handle Buttons
+    
     document.querySelector('.accept').addEventListener('click', () => handleValidation(farmerId, 'approve'));
     document.querySelector('.decline').addEventListener('click', () => handleValidation(farmerId, 'delete'));
 });
@@ -58,7 +58,7 @@ function renderFarmerDetails(farmer) {
         </div>
     `;
 
-    // Hide accept button if already approved
+    
     if (farmer.is_approved) {
         document.querySelector('.accept').style.display = 'none';
         document.querySelector('.valid').innerHTML += '<p style="color:green; font-weight:bold;">Already Approved</p>';
@@ -71,7 +71,7 @@ async function handleValidation(id, action) {
 
     try {
         let url = `${API_BASE_URL}/api/farmers/${id}`;
-        let method = 'DELETE'; // Default for decline
+        let method = 'DELETE'; 
 
         if (action === 'approve') {
             url = `${API_BASE_URL}/api/farmers/${id}/approve`;
@@ -84,7 +84,7 @@ async function handleValidation(id, action) {
         });
 
         if (response.ok) {
-            alert(`Application ${action}d successfully!`); // simple plural
+            alert(`Application ${action}d successfully!`); 
             window.location.href = 'admin.html';
         } else {
             const err = await response.json();

@@ -23,13 +23,13 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(database.get_d
     db.commit()
     db.refresh(new_user)
     
-    # Auto-login: Create token
+    
     access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = auth.create_access_token(
         data={"sub": new_user.email}, expires_delta=access_token_expires
     )
     
-    # New user has no profile yet
+    
     return {
         "access_token": access_token, 
         "token_type": "bearer",
@@ -59,7 +59,7 @@ def login_for_access_token(user_credentials: schemas.UserLogin, db: Session = De
         data={"sub": user.email}, expires_delta=access_token_expires
     )
     
-    # Check if user has a profile based on their role
+    
     has_profile = False
     profile_type = None
     

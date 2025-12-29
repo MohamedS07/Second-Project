@@ -18,6 +18,12 @@ def register_donor(donor: schemas.DonorCreate, db: Session = Depends(database.ge
     db.add(current_user)
     db.commit()
     db.refresh(new_donor)
+    
+    # Generate new access token for the updated role
+    access_token = auth.create_access_token(data={"sub": current_user.email})
+    new_donor.access_token = access_token
+    new_donor.token_type = "bearer"
+    
     return new_donor
 
 @router.get("/me", response_model=schemas.DonorResponse)

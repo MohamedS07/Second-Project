@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Admin access required');
         window.location.href = 'sign-up.html';
         return;
-        // In a real app, verify role here or handle 403 from backend
+
     }
 
-    // Fetch Stats
+
     try {
         const response = await fetch(`${API_BASE_URL}/api/admin/stats`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -15,15 +15,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok) {
             const stats = await response.json();
 
-            // Render Pie Chart
+
+
             const ctx = document.getElementById('myPieChart').getContext('2d');
             new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['Farmers', 'Donors', 'NGOs'],
+                    labels: ['Farmers Applied', 'People Received Help'],
                     datasets: [{
-                        data: [stats.farmers, stats.donors, stats.ngos],
-                        backgroundColor: ['#4CAF50', '#2196F3', '#FFC107'],
+                        data: [stats.farmers, stats.people_helped],
+                        backgroundColor: ['#4CAF50', '#2196F3'],
                     }]
                 }
             });
@@ -32,22 +33,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    // Fetch Recent Activity (Farmers List)
+
     try {
-        const response = await fetch(`${API_BASE_URL}/api/farmers/list?limit=100`, { // Fetch more for admin list
+        const response = await fetch(`${API_BASE_URL}/api/farmers/list?limit=100`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
             const farmers = await response.json();
             const listContainer = document.querySelector('.list-container');
-            listContainer.innerHTML = '<h2>Farmer Validations</h2>'; // Reset title
+            listContainer.innerHTML = '<h2>Farmer Validations</h2>';
 
             farmers.forEach(farmer => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.style.cursor = 'pointer';
 
-                // Add click event to redirect to Validation Page
+
                 card.onclick = () => {
                     window.location.href = `validation.html?id=${farmer.id}`;
                 };

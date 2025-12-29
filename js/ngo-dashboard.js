@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Fetch Profile
+    
     try {
         const response = await fetch(`${API_BASE_URL}/api/ngos/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok) {
             const ngo = await response.json();
 
-            // Populate Dashboard
+            
             const nameEl = document.getElementById('ngoName');
             if (nameEl) nameEl.textContent = ngo.name;
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    // Fetch Farmers for this NGO
+    
     try {
         const response = await fetch(`${API_BASE_URL}/api/ngos/farmers`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const farmers = await response.json();
             const container = document.querySelector('.container');
 
-            // Create list view
+            
             const listDiv = document.createElement('div');
             listDiv.className = 'ngo-farmers-list';
             listDiv.style.marginTop = '20px';
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    // Add Button Confirmation
+    
     const addButton = document.querySelector('#addFarmerBtn');
     if (addButton) {
         addButton.addEventListener('click', () => {
