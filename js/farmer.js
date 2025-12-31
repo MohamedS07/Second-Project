@@ -31,7 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('token', result.access_token);
                     }
 
-                    window.location.href = 'farmer-dashboard.html';
+                    if (formData.get('apply_type') === 'NGO') {
+                        alert('Application Submitted. Access is managed by the NGO.');
+                        window.location.href = 'index.html';
+                    } else {
+                        window.location.href = 'farmer-dashboard.html';
+                    }
                 } else {
                     let errorMessage = "Unknown Error";
                     try {

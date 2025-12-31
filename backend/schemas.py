@@ -106,6 +106,9 @@ class NGOResponse(NGOBase):
     id: int
     user_id: int
     is_approved: bool
+    
+    access_token: Optional[str] = None
+    token_type: Optional[str] = None
 
     class Config:
         from_attributes = True

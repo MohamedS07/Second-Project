@@ -13,15 +13,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok) {
             const farmer = await response.json();
 
-            
+            if (farmer.apply_type === 'NGO') {
+                alert('Access restricted. Please contact your NGO.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+
             document.getElementById('farmerName').innerText = farmer.name;
 
-            
+
             const statusEl = document.getElementById('appStatus');
             statusEl.innerText = farmer.is_approved ? 'Approved' : 'Pending';
             statusEl.style.color = farmer.is_approved ? 'green' : 'orange';
 
-            
+
             const loanAmount = parseFloat(farmer.loan_amount) || 0;
             const amountRaised = farmer.amount_raised || 0;
             const pendingAmount = loanAmount - amountRaised;
