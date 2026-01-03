@@ -10,9 +10,11 @@ SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres.qsrnh
 # Supabase (Postgres) connection optimization
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    pool_pre_ping=True,      # Check connection health before using
-    pool_recycle=300,        # Recycle connections every 5 minutes
-    connect_args={"keepalives": 1, "keepalives_idle": 30, "keepalives_interval": 10, "keepalives_count": 5}
+    pool_size=20,
+    max_overflow=0,
+    # Transaction poolers (port 6543) often require autocommit-like behavior or specific isolation levels
+    # We will try standard configuration first but ensure connections are recycled
+    pool_recycle=300
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
