@@ -46,6 +46,7 @@ try:
     app.mount("/static/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
 
+    # Mount with /api prefix (for local and explicit paths)
     app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
     app.include_router(farmer.router, prefix="/api/farmers", tags=["Farmers"])
     app.include_router(donor.router, prefix="/api/donors", tags=["Donors"])
@@ -53,18 +54,28 @@ try:
     app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
     app.include_router(payment.router, prefix="/api/payments", tags=["Payments"])
 
+    # Mount without /api prefix (fallback for Vercel if root_path strips /api)
+    app.include_router(auth.router, prefix="/auth", tags=["Auth"])
+    app.include_router(farmer.router, prefix="/farmers", tags=["Farmers"])
+    app.include_router(donor.router, prefix="/donors", tags=["Donors"])
+    app.include_router(ngo.router, prefix="/ngos", tags=["NGOs"])
+    app.include_router(admin.router, prefix="/admin", tags=["Admin"])
+    app.include_router(payment.router, prefix="/payments", tags=["Payments"])
+
 except Exception as e:
     setup_error = str(e)
     setup_traceback = traceback.format_exc()
     print(f"Setup Error: {setup_error}") # Print to logs as well
 
 @app.get("/")
+@app.get("/api/")
 def read_root():
     if setup_error:
         return {"status": "error", "message": "Backend failed to start correctly", "detail": setup_error, "traceback": setup_traceback}
     return {"message": "Uzhavan Connect Backend Running"}
 
 @app.get("/api/health")
+@app.get("/health")
 def health_check():
     if setup_error:
         return JSONResponse(
