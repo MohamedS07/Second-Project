@@ -6,7 +6,7 @@ from . import database, models
 import os
 
 
-database.Base.metadata.create_all(bind=database.engine)
+# database.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="Uzhavan Connect Backend")
 
