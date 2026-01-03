@@ -12,7 +12,8 @@ try:
     
     
     print("Creating tables from models...")
-    models.Base.metadata.create_all(bind=database.engine)
+    from backend.database import Base
+    Base.metadata.create_all(bind=database.engine)
     
     print("Database has been reset successfully.")
 except Exception as e:

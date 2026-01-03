@@ -6,7 +6,7 @@ from . import database, models
 import os
 
 
-models.Base.metadata.create_all(bind=database.engine)
+database.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="Uzhavan Connect Backend")
 
@@ -20,8 +20,18 @@ app.add_middleware(
 )
 
 
-os.makedirs("uploads", exist_ok=True)
-app.mount("/static/uploads", StaticFiles(directory="uploads"), name="uploads")
+from pathlib import Path
+
+# ... (imports)
+
+# ... (app setup)
+
+# Ensure uploads directory exists relative to backend
+BASE_DIR = Path(__file__).resolve().parent
+UPLOAD_DIR = BASE_DIR / "uploads"
+UPLOAD_DIR.mkdir(exist_ok=True)
+
+app.mount("/static/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
