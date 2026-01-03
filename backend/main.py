@@ -51,3 +51,7 @@ app.include_router(payment.router, prefix="/api/payments", tags=["Payments"])
 @app.get("/")
 def read_root():
     return {"message": "Uzhavan Connect Backend Running"}
+
+@app.get("/api/health")
+def health_check():
+    return {"status": "ok", "message": "Backend is running and accessible"}
