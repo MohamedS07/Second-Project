@@ -1,9 +1,9 @@
-fastapi
-uvicorn
-sqlalchemy
+fastapi>=0.100.0
+uvicorn>=0.20.0
+sqlalchemy>=2.0.0
 psycopg2-binary
 python-multipart
-pydantic
+pydantic>=2.4.0
 email-validator
 requests
 jinja2
