@@ -3,7 +3,7 @@ import os
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
 from sqlalchemy.orm import Session
-from .. import models, schemas, database, auth
+from backend import models, schemas, database, auth
 
 router = APIRouter()
 

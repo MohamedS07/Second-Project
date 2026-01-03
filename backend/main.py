@@ -1,9 +1,14 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import farmer, donor, ngo, auth, admin, payment
-from . import database, models
 import os
+import sys
+
+# Ensure backend folder is in path for Vercel imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from backend.routers import farmer, donor, ngo, auth, admin, payment
+from backend import database, models
 
 
 # database.Base.metadata.create_all(bind=database.engine)

@@ -2,7 +2,7 @@ import shutil
 import os
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
-from .. import models, schemas, database, auth
+from backend import models, schemas, database, auth
 from typing import Optional, List
 
 router = APIRouter()
