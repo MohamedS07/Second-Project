@@ -27,9 +27,16 @@ from pathlib import Path
 # ... (app setup)
 
 # Ensure uploads directory exists relative to backend
+# Ensure uploads directory exists relative to backend
 BASE_DIR = Path(__file__).resolve().parent
 UPLOAD_DIR = BASE_DIR / "uploads"
-UPLOAD_DIR.mkdir(exist_ok=True)
+
+try:
+    UPLOAD_DIR.mkdir(exist_ok=True)
+except OSError:
+    # Fallback to /tmp for read-only environments (like Vercel)
+    UPLOAD_DIR = Path("/tmp/uploads")
+    UPLOAD_DIR.mkdir(exist_ok=True)
 
 app.mount("/static/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
