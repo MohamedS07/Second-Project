@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     const data = await response.json();
 
-                    
+
                     localStorage.setItem('token', data.access_token);
 
                     alert('Registration Successful!');
-                    
+
                     window.location.href = 'role.html';
                 } else {
                     const data = await response.json();
@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (err) {
                 console.error(err);
-                alert('Registration failed. Check console.');
+                alert(`Registration failed: ${err.message}. (See Console for details)`);
             }
         });
     }
 
-    
+
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (data.profile_type === 'farmer') window.location.href = 'farmer-dashboard.html';
                         else if (data.profile_type === 'donor') window.location.href = 'donor-dashboard.html';
                         else if (data.profile_type === 'ngo') window.location.href = 'ngo-dashboard.html';
-                        else window.location.href = 'role.html'; 
+                        else window.location.href = 'role.html';
                     } else {
-                        
+
                         window.location.href = 'role.html';
                     }
                 } else {
