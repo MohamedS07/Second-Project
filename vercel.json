@@ -1,7 +1,7 @@
 {
     "builds": [
         {
-            "src": "backend/main.py",
+            "src": "api/index.py",
             "use": "@vercel/python"
         },
         {
@@ -9,14 +9,34 @@
             "use": "@vercel/static"
         }
     ],
-    "rewrites": [
+    "routes": [
         {
-            "source": "/api/(.*)",
-            "destination": "/backend/main.py"
+            "src": "/api/(.*)",
+            "dest": "api/index.py"
         },
         {
-            "source": "/(.*)",
-            "destination": "/frontend/$1"
+            "src": "/",
+            "dest": "/frontend/index.html"
+        },
+        {
+            "src": "/pages/(.*)",
+            "dest": "/frontend/pages/$1"
+        },
+        {
+            "src": "/js/(.*)",
+            "dest": "/frontend/js/$1"
+        },
+        {
+            "src": "/style/(.*)",
+            "dest": "/frontend/style/$1"
+        },
+        {
+            "src": "/assets/(.*)",
+            "dest": "/frontend/assets/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/frontend/$1"
         }
     ]
 }
