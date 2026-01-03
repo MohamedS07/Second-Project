@@ -3,6 +3,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 # Use environment variable for production, fallback to local for development
 # Use environment variable for production, fallback to local for development

@@ -8,5 +8,5 @@ venv/
 .venv/
 project/
 *.db
-.env
+
 .DS_Store
