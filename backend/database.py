@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 # Use environment variable for production, fallback to local for development
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres.qsrnhruqwhkfgdxenvxi:UzhavanConnect@aws-1-ap-south-1.pooler.supabase.com:5432/postgres")
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres.qsrnhruqwhkfgdxenvxi:UzhavanConnect@aws-1-ap-south-1.pooler.supabase.com:6543/postgres")
 
 # Supabase (Postgres) connection optimization
 engine = create_engine(
