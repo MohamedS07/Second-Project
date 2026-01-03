@@ -60,3 +60,7 @@ def read_root():
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "message": "Backend is running and accessible"}
+
+@app.get("/api/debug")
+def debug_check():
+    return {"status": "debug", "message": "Debug works"}
