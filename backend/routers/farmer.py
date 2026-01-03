@@ -8,7 +8,12 @@ from backend import models, schemas, database, auth
 router = APIRouter()
 
 UPLOAD_DIR = "uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+try:
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+except OSError:
+    # Fallback for Vercel (Read-Only File System)
+    UPLOAD_DIR = "/tmp/uploads"
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 def save_file(file: UploadFile, user_id: int, file_type: str):
     if not file:
