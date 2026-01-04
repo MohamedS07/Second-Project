@@ -20,7 +20,7 @@ class FarmerCreate(FarmerBase):
 
 class FarmerResponse(FarmerBase):
     id: int
-    user_id: int
+    user_id: Optional[int] = None
     photo_path: Optional[str]
     aadhar_photo_path: Optional[str]
     pan_photo_path: Optional[str]
