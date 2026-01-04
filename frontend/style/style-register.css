@@ -334,17 +334,21 @@ footer {
     font-size: 22px;
   }
 
-  .dropdown.left,
-  .dropdown.right {
-    width: 80%;
+  .dropdown.left {
+    width: 100px;
     left: 10%;
     right: 10%;
+  }
+  .dropdown.right{
+    width: 100px;
   }
  .container {
     flex-direction: column;
     padding: 20px;
     gap: 25px;
     margin-top: 20px;
+    position: relative;
+    
   }
 
   .register-box {

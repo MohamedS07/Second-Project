@@ -164,6 +164,7 @@ button {
   width: 200px;
   border-radius: 6px;
   cursor: pointer;
+  font-family: 'Poppins',sans-serif;
 }
 button:hover { 
   background: #005c00; 
