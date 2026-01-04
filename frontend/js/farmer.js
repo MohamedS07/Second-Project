@@ -38,12 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.location.href = 'farmer-dashboard.html';
                     }
                 } else {
+                } else {
                     let errorMessage = "Unknown Error";
+                    const responseText = await response.text();
                     try {
-                        const error = await response.json();
+                        const error = JSON.parse(responseText);
                         errorMessage = error.detail || JSON.stringify(error);
                     } catch (e) {
-                        errorMessage = await response.text();
+                        errorMessage = responseText || response.statusText;
                     }
                     alert(`Error: ${errorMessage}`);
                 }
