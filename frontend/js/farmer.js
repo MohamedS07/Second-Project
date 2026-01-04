@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (formData.get('apply_type') === 'NGO') {
                         alert('Application Submitted. Access is managed by the NGO.');
-                        window.location.href = 'index.html';
+                        window.location.href = 'ngo-dashboard.html';
                     } else {
                         window.location.href = 'farmer-dashboard.html';
                     }

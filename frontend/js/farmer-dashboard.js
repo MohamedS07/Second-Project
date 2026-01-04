@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (farmer.apply_type === 'NGO') {
                 alert('Access restricted. Please contact your NGO.');
-                window.location.href = 'index.html';
+                window.location.href = '../index.html';
                 return;
             }
 

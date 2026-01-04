@@ -48,7 +48,8 @@ def apply_as_farmer(
     current_user: models.User = Depends(auth.get_current_user)
 ):
     
-    if current_user.farmer_profile:
+    # If applying as Self, check if they already have a profile
+    if apply_type != "NGO" and current_user.farmer_profile:
         raise HTTPException(status_code=400, detail="You have already applied as a Farmer.")
     
     
@@ -57,8 +58,12 @@ def apply_as_farmer(
     pan_path = save_file(pan_photo, current_user.id, "pan")
     loan_path = save_file(loan_detail_photo, current_user.id, "loan")
     
+    # For NGO applications, we don't link the farmer profile to the NGO's user_id
+    # This avoids the One-to-One constraint and allows multiple farmers per NGO
+    farmer_user_id = current_user.id if apply_type != "NGO" else None
+
     new_farmer = models.Farmer(
-        user_id=current_user.id,
+        user_id=farmer_user_id,
         name=name,
         village=village,
         district=district,
@@ -77,16 +82,19 @@ def apply_as_farmer(
         loan_detail_photo_path=loan_path
     )
     
-    current_user.role = "farmer"
     db.add(new_farmer)
-    db.add(current_user)
+
+    # Only update role if applying for self
+    if apply_type != "NGO":
+        current_user.role = "farmer"
+        db.add(current_user)
+        # Create token for self-registered farmer
+        access_token = auth.create_access_token(data={"sub": current_user.email})
+        new_farmer.access_token = access_token
+        new_farmer.token_type = "bearer"
+
     db.commit()
     db.refresh(new_farmer)
-    
-    
-    access_token = auth.create_access_token(data={"sub": current_user.email})
-    new_farmer.access_token = access_token
-    new_farmer.token_type = "bearer"
     
     return new_farmer
 
