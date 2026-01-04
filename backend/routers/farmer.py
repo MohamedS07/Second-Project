@@ -11,7 +11,7 @@ UPLOAD_DIR = "uploads"
 try:
     os.makedirs(UPLOAD_DIR, exist_ok=True)
 except OSError:
-    # Fallback for Vercel (Read-Only File System)
+    
     UPLOAD_DIR = "/tmp/uploads"
     os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -83,7 +83,7 @@ def apply_as_farmer(
     db.commit()
     db.refresh(new_farmer)
     
-    # Generate new access token for the updated role
+    
     access_token = auth.create_access_token(data={"sub": current_user.email})
     new_farmer.access_token = access_token
     new_farmer.token_type = "bearer"

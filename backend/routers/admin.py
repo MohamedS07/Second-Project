@@ -39,7 +39,7 @@ def get_stats(db: Session = Depends(database.get_db), current_user: models.User 
     donor_count = db.query(models.Donor).count()
     ngo_count = db.query(models.NGO).count()
     
-    # Calculate people helped (farmers with amount_raised > 0)
+    
     people_helped_count = db.query(models.Farmer).filter(models.Farmer.amount_raised > 0).count()
     
     return {

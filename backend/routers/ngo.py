@@ -11,7 +11,7 @@ UPLOAD_DIR = "uploads"
 try:
     os.makedirs(UPLOAD_DIR, exist_ok=True)
 except OSError:
-    # Fallback for Vercel (Read-Only File System)
+    
     UPLOAD_DIR = "/tmp/uploads"
     os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -61,7 +61,7 @@ def register_ngo(
     db.add(current_user)
     db.commit()
     db.refresh(new_ngo)
-    # Generate new access token for the updated role
+    
     access_token = auth.create_access_token(data={"sub": current_user.email})
     new_ngo.access_token = access_token
     new_ngo.token_type = "bearer"

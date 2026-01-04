@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            // Clear existing hardcoded content
+            
             container.innerHTML = '<h2>Farmers Needing Support</h2>';
 
             if (farmers.length === 0) {
@@ -34,15 +34,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const raised = farmer.amount_raised || 0;
                 const pending = loan - raised;
 
-                // Don't show fully funded requests
+                
                 if (pending <= 0) return;
 
                 const card = document.createElement('div');
-                card.className = 'farmer-card'; // Reusing existing class from farmer-list.html
+                card.className = 'farmer-card'; 
 
-                // Add some basic styling if css class isn't sufficient or to match previous dynamic style
-                // Ideally this should be in CSS, but keeping consistent with previous JS logic for now
-                // We will try to rely on style-farmer-list.css classes primarily
+                
 
                 card.innerHTML = `
                   <div class="farmer-img" style="display:flex;justify-content:center;align-items:center;color:#888;">

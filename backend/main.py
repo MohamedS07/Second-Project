@@ -27,26 +27,21 @@ try:
     from backend import database, models
     from pathlib import Path
 
-    # ... (imports)
-
-    # ... (app setup)
-
-    # Ensure uploads directory exists relative to backend
-    # Ensure uploads directory exists relative to backend
+    
     BASE_DIR = Path(__file__).resolve().parent
     UPLOAD_DIR = BASE_DIR / "uploads"
 
     try:
         UPLOAD_DIR.mkdir(exist_ok=True)
     except OSError:
-        # Fallback to /tmp for read-only environments (like Vercel)
+        
         UPLOAD_DIR = Path("/tmp/uploads")
         UPLOAD_DIR.mkdir(exist_ok=True)
 
     app.mount("/static/uploads", StaticFiles(directory=str(UPLOAD_DIR)), name="uploads")
 
 
-    # Mount with /api prefix (for local and explicit paths)
+    
     app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
     app.include_router(farmer.router, prefix="/api/farmers", tags=["Farmers"])
     app.include_router(donor.router, prefix="/api/donors", tags=["Donors"])
@@ -54,7 +49,7 @@ try:
     app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
     app.include_router(payment.router, prefix="/api/payments", tags=["Payments"])
 
-    # Mount without /api prefix (fallback for Vercel if root_path strips /api)
+    
     app.include_router(auth.router, prefix="/auth", tags=["Auth"])
     app.include_router(farmer.router, prefix="/farmers", tags=["Farmers"])
     app.include_router(donor.router, prefix="/donors", tags=["Donors"])
@@ -65,7 +60,7 @@ try:
 except Exception as e:
     setup_error = str(e)
     setup_traceback = traceback.format_exc()
-    print(f"Setup Error: {setup_error}") # Print to logs as well
+    print(f"Setup Error: {setup_error}") 
 
 @app.get("/")
 @app.get("/api/")

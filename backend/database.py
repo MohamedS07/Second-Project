@@ -8,13 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-# Use environment variable for production, fallback to local for development
-# Use environment variable for production, fallback to local for development
-# Using Port 6543 (Transaction Pooler) as requested
+
 SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres.qsrnhruqwhkfgdxenvxi:UzhavanConnect@aws-1-ap-south-1.pooler.supabase.com:6543/postgres?sslmode=require")
 
-# Supabase (Postgres) connection optimization for Transaction Pooler
-# Note: pool_pre_ping=False because 'SELECT 1' can sometimes confuse transaction poolers if not managed perfectly
+
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     pool_size=20,
