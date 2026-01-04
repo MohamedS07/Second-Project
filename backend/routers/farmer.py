@@ -62,6 +62,10 @@ def apply_as_farmer(
     # This avoids the One-to-One constraint and allows multiple farmers per NGO
     farmer_user_id = current_user.id if apply_type != "NGO" else None
 
+    # Auto-populate NGO name if applying as NGO
+    if apply_type == "NGO" and current_user.ngo_profile:
+        ngo_name_ref = current_user.ngo_profile.name
+
     new_farmer = models.Farmer(
         user_id=farmer_user_id,
         name=name,

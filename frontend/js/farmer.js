@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.location.href = 'farmer-dashboard.html';
                     }
                 } else {
-                } else {
                     let errorMessage = "Unknown Error";
                     const responseText = await response.text();
                     try {
