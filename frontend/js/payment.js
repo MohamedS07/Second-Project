@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const amount = document.getElementById('amountInput').value;
         const method = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-        if (!amount || amount < 100) {
-            alert('Please enter a valid amount (Min ₹100)');
+        if (!amount || amount < 50) {
+            alert('Please enter a valid amount (Min ₹50)');
             return;
         }
 
