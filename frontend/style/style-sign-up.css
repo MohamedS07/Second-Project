@@ -326,11 +326,13 @@ footer {
     font-size: 22px;
   }
 
-  .dropdown.left,
-  .dropdown.right {
-    width: 80%;
+  .dropdown.left {
+    width: 100px;
     left: 10%;
     right: 10%;
+  }
+  .dropdown.right{
+    width: 100px;
   }
 .register-box {
     width: 100%;

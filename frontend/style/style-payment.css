@@ -330,6 +330,15 @@ footer {
 
 
 @media screen and (max-width: 426px) {
+
+    .dropdown.left {
+    width: 100px;
+    left: 10%;
+    right: 10%;
+  }
+  .dropdown.right{
+    width: 100px;
+  }
     .payment-box {
         width: 100%;
         padding: 20px;
