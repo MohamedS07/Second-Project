@@ -7,23 +7,36 @@ from backend import models, schemas, database, auth
 
 router = APIRouter()
 
-UPLOAD_DIR = "uploads"
+
+from pathlib import Path
+
+# Use a consistent absolute path for uploads
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+UPLOAD_DIR = BASE_DIR / "backend" / "uploads"
+
 try:
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 except OSError:
-    
-    UPLOAD_DIR = "/tmp/uploads"
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    # Fallback for some environments, though ideally we stick to the project dir
+    UPLOAD_DIR = Path("/tmp/uploads")
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 def save_file(file: UploadFile, user_id: int, file_type: str):
     if not file:
         return None
     
-    filename = f"{user_id}_{file_type}_{file.filename}"
-    file_path = os.path.join(UPLOAD_DIR, filename)
+    # Sanitize filename to prevent directory traversal or weird characters
+    safe_filename = os.path.basename(file.filename)
+    filename = f"{user_id}_{file_type}_{safe_filename}"
+    
+    file_path = UPLOAD_DIR / filename
+    
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-    return file_path
+        
+    # Return relative path for URL construction
+    # We want "uploads/filename" so the frontend can do BASE_URL + /static/ + path
+    return f"uploads/{filename}"
 
 @router.post("/apply", response_model=schemas.FarmerResponse)
 def apply_as_farmer(
