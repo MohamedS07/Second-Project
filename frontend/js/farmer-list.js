@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            
+
             container.innerHTML = '<h2>Farmers Needing Support</h2>';
 
             if (farmers.length === 0) {
@@ -34,17 +34,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const raised = farmer.amount_raised || 0;
                 const pending = loan - raised;
 
-                
+
                 if (pending <= 0) return;
 
                 const card = document.createElement('div');
-                card.className = 'farmer-card'; 
+                card.className = 'farmer-card';
 
-                
+                const photoUrl = farmer.photo_path ? getFileUrl(farmer.photo_path) : '../assets/farmer (2).jpg';
+
 
                 card.innerHTML = `
-                  <div class="farmer-img" style="display:flex;justify-content:center;align-items:center;color:#888;">
-                    <i class="fas fa-user" style="font-size: 40px;"></i>
+                  <div class="farmer-img" style="display:flex;justify-content:center;align-items:center; overflow:hidden;">
+                    <img src="${photoUrl}" alt="${farmer.name}" style="width:100px; height:100px; border-radius:50%; object-fit:cover;">
                   </div>
             
                   <div class="farmer-info">
@@ -67,3 +68,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 });
+
+function getFileUrl(path) {
+    if (!path) return '';
+    if (path.startsWith('http') || path.startsWith('data:')) {
+        return path;
+    }
+    return `${API_BASE_URL}/static/${path}`;
+}
