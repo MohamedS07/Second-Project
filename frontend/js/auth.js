@@ -72,12 +72,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.location.href = 'role.html';
                     }
                 } else {
-                    const data = await response.json();
-                    alert(`Error: ${data.detail}`);
+                    let errorMessage = "Unknown Error";
+                    const responseText = await response.text();
+                    try {
+                        const data = JSON.parse(responseText);
+                        errorMessage = data.detail || JSON.stringify(data);
+                    } catch (e) {
+                        // If not JSON, it's likely an HTML error page (500/404)
+                        errorMessage = responseText || response.statusText;
+                    }
+                    alert(`Error: ${errorMessage}`);
                 }
             } catch (err) {
                 console.error(err);
-                alert('Login failed. Check console.');
+                alert(`Login failed: ${err.message}`);
             }
         });
     }
