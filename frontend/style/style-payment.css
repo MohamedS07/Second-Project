@@ -18,11 +18,20 @@ body {
     height: 50px;
 }
 
+.site-name{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 4px;
+}
+.site-name img{
+  height: 65px;
+  width: 155px;
+}
 .site-name a {
-    font-size: x-large;
-    font-weight: 800;
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 .icon {
@@ -352,9 +361,15 @@ footer {
         padding: 10px 15px;
     }
 
-    .site-name a {
-        font-size: 20px;
-    }
+      .site-name{
+    position: relative;
+    top: 4px;
+    left: 10px; 
+  }
+  .site-name img{
+  height: 50px;
+  width: 105px;
+}
 
     .footer-container {
         grid-template-columns: 1fr;
