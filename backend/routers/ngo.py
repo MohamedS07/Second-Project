@@ -1,5 +1,4 @@
-import shutil
-import os
+import base64
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from backend import models, schemas, database, auth
@@ -7,22 +6,14 @@ from typing import Optional, List
 
 router = APIRouter()
 
-UPLOAD_DIR = "uploads"
-try:
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
-except OSError:
-    
-    UPLOAD_DIR = "/tmp/uploads"
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
-
-def save_file(file: UploadFile, user_id: int, file_type: str):
+# Base64 helper
+def file_to_base64(file: UploadFile) -> str:
     if not file:
         return None
-    filename = f"{user_id}_{file_type}_{file.filename}"
-    file_path = os.path.join(UPLOAD_DIR, filename)
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    return file_path
+    file_content = file.file.read()
+    base64_encoded = base64.b64encode(file_content).decode('utf-8')
+    mime_type = file.content_type if file.content_type else "image/jpeg"
+    return f"data:{mime_type};base64,{base64_encoded}"
 
 @router.post("/register", response_model=schemas.NGOResponse)
 def register_ngo(
@@ -44,7 +35,8 @@ def register_ngo(
     if db.query(models.NGO).filter(models.NGO.reg_number == reg_number).first():
          raise HTTPException(status_code=400, detail="NGO Registration number already exists")
 
-    proof_path = save_file(proof_document, current_user.id, "ngo_proof") if proof_document else None
+    # proof_path = save_file(proof_document, current_user.id, "ngo_proof") if proof_document else None
+    proof_b64 = file_to_base64(proof_document)
 
     new_ngo = models.NGO(
         user_id=current_user.id,
@@ -54,7 +46,7 @@ def register_ngo(
         contact_person=contact_person,
         contact_number=contact_number,
         email=email,
-        proof_document_path=proof_path
+        proof_document_path=proof_b64
     )
     current_user.role = "ngo"
     db.add(new_ngo)

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from ..database import Base
 
@@ -14,7 +14,7 @@ class NGO(Base):
     contact_person = Column(String)
     contact_number = Column(String)
     email = Column(String, nullable=True)
-    proof_document_path = Column(String, nullable=True)
+    proof_document_path = Column(Text, nullable=True)
     
     is_approved = Column(Boolean, default=False)
     
