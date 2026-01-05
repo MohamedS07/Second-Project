@@ -118,7 +118,7 @@ body {
     }
 
     #ngoName{
-      text-align: center;
+      text-align: start;
     }
     .box h3 {
       font-size: 18px;
