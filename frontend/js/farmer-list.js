@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                   <div class="farmer-info">
                     <h3>${farmer.name}</h3>
                     <p>Village: ${farmer.village}, ${farmer.district}</p>
-                     <p><strong>Goal:</strong> ₹${loan} | <strong>Raised:</strong> ₹${raised}</p>
+                     <p><strong>Raised:</strong> ₹${raised}</p>
                      <p><strong>Pending:</strong> <span style="color:red">₹${pending}</span></p>
                   </div>
                   <button class="donate-btn" onclick="window.location.href='payment.html?farmerId=${farmer.id}'">Donate</button>
