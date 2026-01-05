@@ -6,7 +6,6 @@ import os
 import sys
 import traceback
 
-# Ensure backend folder is in path for Vercel imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 app = FastAPI(title="Uzhavan Connect Backend")
