@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from ..database import Base
 
@@ -21,10 +21,10 @@ class Farmer(Base):
     ngo_name_ref = Column(String, nullable=True)
     
     
-    photo_path = Column(String, nullable=True)
-    aadhar_photo_path = Column(String, nullable=True)
-    pan_photo_path = Column(String, nullable=True)
-    loan_detail_photo_path = Column(String, nullable=True)
+    photo_path = Column(Text, nullable=True)
+    aadhar_photo_path = Column(Text, nullable=True)
+    pan_photo_path = Column(Text, nullable=True)
+    loan_detail_photo_path = Column(Text, nullable=True)
 
     is_approved = Column(Boolean, default=False)
     amount_raised = Column(Integer, default=0) 

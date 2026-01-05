@@ -1,42 +1,14 @@
-import shutil
-import os
-from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
-from sqlalchemy.orm import Session
-from backend import models, schemas, database, auth
+import base64
 
-router = APIRouter()
-
-
-from pathlib import Path
-
-# Use a consistent absolute path for uploads
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-UPLOAD_DIR = BASE_DIR / "backend" / "uploads"
-
-try:
-    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-except OSError:
-    # Fallback for some environments, though ideally we stick to the project dir
-    UPLOAD_DIR = Path("/tmp/uploads")
-    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-
-def save_file(file: UploadFile, user_id: int, file_type: str):
+# Base64 helper
+def file_to_base64(file: UploadFile) -> str:
     if not file:
         return None
-    
-    # Sanitize filename to prevent directory traversal or weird characters
-    safe_filename = os.path.basename(file.filename)
-    filename = f"{user_id}_{file_type}_{safe_filename}"
-    
-    file_path = UPLOAD_DIR / filename
-    
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-        
-    # Return relative path for URL construction
-    # We want "uploads/filename" so the frontend can do BASE_URL + /static/ + path
-    return f"uploads/{filename}"
+    file_content = file.file.read()
+    base64_encoded = base64.b64encode(file_content).decode('utf-8')
+    # Use Content-Type from the uploaded file, default to jpeg if missing
+    mime_type = file.content_type if file.content_type else "image/jpeg"
+    return f"data:{mime_type};base64,{base64_encoded}"
 
 @router.post("/apply", response_model=schemas.FarmerResponse)
 def apply_as_farmer(
@@ -66,10 +38,15 @@ def apply_as_farmer(
         raise HTTPException(status_code=400, detail="You have already applied as a Farmer.")
     
     
-    photo_path = save_file(photo, current_user.id, "photo") if photo else None
-    aadhar_path = save_file(aadhar_photo, current_user.id, "aadhar")
-    pan_path = save_file(pan_photo, current_user.id, "pan")
-    loan_path = save_file(loan_detail_photo, current_user.id, "loan")
+    # Mandatory check (FastAPI handles it but explicit check is good practice)
+    if not aadhar_photo or not pan_photo or not loan_detail_photo:
+         raise HTTPException(status_code=400, detail="Aadhar, PAN, and Loan documents are mandatory.")
+
+    # Convert to Base64
+    photo_b64 = file_to_base64(photo) if photo else None
+    aadhar_b64 = file_to_base64(aadhar_photo)
+    pan_b64 = file_to_base64(pan_photo)
+    loan_b64 = file_to_base64(loan_detail_photo)
     
     # For NGO applications, we don't link the farmer profile to the NGO's user_id
     # This avoids the One-to-One constraint and allows multiple farmers per NGO
@@ -93,10 +70,10 @@ def apply_as_farmer(
         apply_type=apply_type,
         ngo_name_ref=ngo_name_ref,
         
-        photo_path=photo_path,
-        aadhar_photo_path=aadhar_path,
-        pan_photo_path=pan_path,
-        loan_detail_photo_path=loan_path
+        photo_path=photo_b64,
+        aadhar_photo_path=aadhar_b64,
+        pan_photo_path=pan_b64,
+        loan_detail_photo_path=loan_b64
     )
     
     db.add(new_farmer)

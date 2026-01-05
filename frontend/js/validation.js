@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/api/farmers/${farmerId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -31,15 +31,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    
+
     document.querySelector('.accept').addEventListener('click', () => handleValidation(farmerId, 'approve'));
     document.querySelector('.decline').addEventListener('click', () => handleValidation(farmerId, 'delete'));
 });
 
+
+function getFileUrl(path) {
+    if (!path) return '';
+    if (path.startsWith('http') || path.startsWith('data:')) {
+        return path;
+    }
+    return `${API_BASE_URL}/static/${path}`;
+}
+
 function renderFarmerDetails(farmer) {
     document.querySelector('.details').innerHTML = `
         <div style="width:200px; height:200px; background:#eee; display:flex; justify-content:center; align-items:center; color:#888; overflow:hidden;">
-             ${farmer.photo_path ? `<img src="${API_BASE_URL}/static/${farmer.photo_path}" style="width:100%; height:100%; object-fit:cover;">` : '<i class="fas fa-file-alt" style="font-size:40px;"></i>'}
+             ${farmer.photo_path ? `<img src="${getFileUrl(farmer.photo_path)}" style="width:100%; height:100%; object-fit:cover;">` : '<i class="fas fa-file-alt" style="font-size:40px;"></i>'}
         </div>
 
         <div class="content">
@@ -51,14 +60,14 @@ function renderFarmerDetails(farmer) {
              <p><strong>Status:</strong> ${farmer.is_approved ? '<span style="color:green">Approved</span>' : '<span style="color:orange">Pending</span>'}</p>
             <div style="margin-top:10px;">
                 <p><strong>Documents:</strong></p>
-                ${farmer.aadhar_photo_path ? `<a href="${API_BASE_URL}/static/${farmer.aadhar_photo_path}" target="_blank">Aadhar</a>` : ''} | 
-                ${farmer.pan_photo_path ? `<a href="${API_BASE_URL}/static/${farmer.pan_photo_path}" target="_blank">PAN</a>` : ''} | 
-                ${farmer.loan_detail_photo_path ? `<a href="${API_BASE_URL}/static/${farmer.loan_detail_photo_path}" target="_blank">Loan Docs</a>` : ''}
+                ${farmer.aadhar_photo_path ? `<a href="${getFileUrl(farmer.aadhar_photo_path)}" target="_blank">Aadhar</a>` : ''} | 
+                ${farmer.pan_photo_path ? `<a href="${getFileUrl(farmer.pan_photo_path)}" target="_blank">PAN</a>` : ''} | 
+                ${farmer.loan_detail_photo_path ? `<a href="${getFileUrl(farmer.loan_detail_photo_path)}" target="_blank">Loan Docs</a>` : ''}
             </div>
         </div>
     `;
 
-    
+
     if (farmer.is_approved) {
         document.querySelector('.accept').style.display = 'none';
         document.querySelector('.valid').innerHTML += '<p style="color:green; font-weight:bold;">Already Approved</p>';
@@ -71,7 +80,7 @@ async function handleValidation(id, action) {
 
     try {
         let url = `${API_BASE_URL}/api/farmers/${id}`;
-        let method = 'DELETE'; 
+        let method = 'DELETE';
 
         if (action === 'approve') {
             url = `${API_BASE_URL}/api/farmers/${id}/approve`;
@@ -84,7 +93,7 @@ async function handleValidation(id, action) {
         });
 
         if (response.ok) {
-            alert(`Application ${action}d successfully!`); 
+            alert(`Application ${action}d successfully!`);
             window.location.href = 'admin.html';
         } else {
             const err = await response.json();
