@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const listContainer = document.querySelector('.list-container');
             listContainer.innerHTML = '<h2>Farmer Validations</h2>';
 
+
             farmers.forEach(farmer => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -53,11 +54,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                     window.location.href = `validation.html?id=${farmer.id}`;
                 };
 
+                const photoUrl = farmer.photo_path ? getFileUrl(farmer.photo_path) : '../assets/farmer (2).jpg'; // Fallback image
+
                 card.innerHTML = `
-                    <div style="width:100%">
-                        <h3 style="color:#2E7D32;">${farmer.name}</h3>
-                        <p><strong>District:</strong> ${farmer.district}</p>
-                        <p><strong>Status:</strong> ${farmer.is_approved ? '<span style="color:green">Approved</span>' : '<span style="color:orange">Pending</span>'}</p>
+                    <div style="display:flex; align-items:center; width:100%;">
+                        <img src="${photoUrl}" style="width:60px; height:60px; border-radius:50%; object-fit:cover; margin-right:15px; border: 1px solid #ccc;">
+                        <div style="flex:1;">
+                            <h3 style="color:#2E7D32; margin:0;">${farmer.name}</h3>
+                            <p style="margin:5px 0;"><strong>District:</strong> ${farmer.district}</p>
+                            <p style="margin:0;"><strong>Status:</strong> ${farmer.is_approved ? '<span style="color:green">Approved</span>' : '<span style="color:orange">Pending</span>'}</p>
+                        </div>
                     </div>
                 `;
                 listContainer.appendChild(card);
@@ -67,6 +73,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 });
+
+function getFileUrl(path) {
+    if (!path) return '';
+    if (path.startsWith('http') || path.startsWith('data:')) {
+        return path;
+    }
+    return `${API_BASE_URL}/static/${path}`;
+}
 
 async function deleteFarmer(id) {
     if (!confirm('Are you sure you want to delete this farmer?')) return;

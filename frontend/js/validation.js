@@ -32,6 +32,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 
+
+    // Add modal HTML to body
+    const modalHtml = `
+        <div id="imageModal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <img id="modalImage" src="" alt="Document Preview">
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
     document.querySelector('.accept').addEventListener('click', () => handleValidation(farmerId, 'approve'));
     document.querySelector('.decline').addEventListener('click', () => handleValidation(farmerId, 'delete'));
 });
@@ -43,6 +55,25 @@ function getFileUrl(path) {
         return path;
     }
     return `${API_BASE_URL}/static/${path}`;
+}
+
+function openModal(url) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    modalImg.src = url;
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('imageModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function (event) {
+    const modal = document.getElementById('imageModal');
+    if (event.target == modal) {
+        closeModal();
+    }
 }
 
 function renderFarmerDetails(farmer) {
@@ -60,9 +91,9 @@ function renderFarmerDetails(farmer) {
              <p><strong>Status:</strong> ${farmer.is_approved ? '<span style="color:green">Approved</span>' : '<span style="color:orange">Pending</span>'}</p>
             <div style="margin-top:10px;">
                 <p><strong>Documents:</strong></p>
-                ${farmer.aadhar_photo_path ? `<a href="${getFileUrl(farmer.aadhar_photo_path)}" target="_blank">Aadhar</a>` : ''} | 
-                ${farmer.pan_photo_path ? `<a href="${getFileUrl(farmer.pan_photo_path)}" target="_blank">PAN</a>` : ''} | 
-                ${farmer.loan_detail_photo_path ? `<a href="${getFileUrl(farmer.loan_detail_photo_path)}" target="_blank">Loan Docs</a>` : ''}
+                ${farmer.aadhar_photo_path ? `<a href="#" onclick="openModal('${getFileUrl(farmer.aadhar_photo_path)}'); return false;">Aadhar</a>` : ''} 
+                ${farmer.pan_photo_path ? `| <a href="#" onclick="openModal('${getFileUrl(farmer.pan_photo_path)}'); return false;">PAN</a>` : ''} 
+                ${farmer.loan_detail_photo_path ? `| <a href="#" onclick="openModal('${getFileUrl(farmer.loan_detail_photo_path)}'); return false;">Loan Docs</a>` : ''}
             </div>
         </div>
     `;
