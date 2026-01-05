@@ -1,4 +1,10 @@
 import base64
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
+from sqlalchemy.orm import Session
+from backend import database, models, schemas, auth
+
+router = APIRouter()
 
 # Base64 helper
 def file_to_base64(file: UploadFile) -> str:
