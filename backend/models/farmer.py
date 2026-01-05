@@ -27,6 +27,7 @@ class Farmer(Base):
     loan_detail_photo_path = Column(Text, nullable=True)
 
     is_approved = Column(Boolean, default=False)
+    is_declined = Column(Boolean, default=False)
     amount_raised = Column(Integer, default=0) 
     
     user = relationship("User", back_populates="farmer_profile")

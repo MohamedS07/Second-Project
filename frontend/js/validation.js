@@ -111,10 +111,13 @@ async function handleValidation(id, action) {
 
     try {
         let url = `${API_BASE_URL}/api/farmers/${id}`;
-        let method = 'DELETE';
+        let method = 'DELETE'; // Default is delete (rarely used now)
 
         if (action === 'approve') {
             url = `${API_BASE_URL}/api/farmers/${id}/approve`;
+            method = 'PUT';
+        } else if (action === 'delete') { // We use 'delete' string for button, but it now means decline
+            url = `${API_BASE_URL}/api/farmers/${id}/decline`;
             method = 'PUT';
         }
 

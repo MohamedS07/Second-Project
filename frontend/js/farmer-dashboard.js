@@ -24,8 +24,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
             const statusEl = document.getElementById('appStatus');
-            statusEl.innerText = farmer.is_approved ? 'Approved' : 'Pending';
-            statusEl.style.color = farmer.is_approved ? 'green' : 'orange';
+            if (farmer.is_declined) {
+                statusEl.innerText = 'Declined';
+                statusEl.style.color = 'red';
+            } else if (farmer.is_approved) {
+                statusEl.innerText = 'Approved';
+                statusEl.style.color = 'green';
+            } else {
+                statusEl.innerText = 'Pending';
+                statusEl.style.color = 'orange';
+            }
 
 
             const loanAmount = parseFloat(farmer.loan_amount) || 0;

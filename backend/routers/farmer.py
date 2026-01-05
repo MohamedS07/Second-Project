@@ -147,6 +147,22 @@ def approve_farmer(farmer_id: int, db: Session = Depends(database.get_db), curre
         raise HTTPException(status_code=404, detail="Farmer not found")
     
     farmer.is_approved = True
+    farmer.is_declined = False # Ensure it's not declined if approved
+    db.commit()
+    db.refresh(farmer)
+    return farmer
+
+@router.put("/{farmer_id}/decline", response_model=schemas.FarmerResponse)
+def decline_farmer(farmer_id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not authorized")
+        
+    farmer = db.query(models.Farmer).filter(models.Farmer.id == farmer_id).first()
+    if not farmer:
+        raise HTTPException(status_code=404, detail="Farmer not found")
+    
+    farmer.is_approved = False
+    farmer.is_declined = True
     db.commit()
     db.refresh(farmer)
     return farmer
