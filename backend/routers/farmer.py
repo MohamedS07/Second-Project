@@ -12,7 +12,7 @@ def file_to_base64(file: UploadFile) -> str:
         return None
     file_content = file.file.read()
     base64_encoded = base64.b64encode(file_content).decode('utf-8')
-    # Use Content-Type from the uploaded file, default to jpeg if missing
+    
     mime_type = file.content_type if file.content_type else "image/jpeg"
     return f"data:{mime_type};base64,{base64_encoded}"
 
@@ -39,26 +39,25 @@ def apply_as_farmer(
     current_user: models.User = Depends(auth.get_current_user)
 ):
     
-    # If applying as Self, check if they already have a profile
+    
     if apply_type != "NGO" and current_user.farmer_profile:
         raise HTTPException(status_code=400, detail="You have already applied as a Farmer.")
     
     
-    # Mandatory check (FastAPI handles it but explicit check is good practice)
+    
     if not aadhar_photo or not pan_photo or not loan_detail_photo:
          raise HTTPException(status_code=400, detail="Aadhar, PAN, and Loan documents are mandatory.")
 
-    # Convert to Base64
+    
     photo_b64 = file_to_base64(photo) if photo else None
     aadhar_b64 = file_to_base64(aadhar_photo)
     pan_b64 = file_to_base64(pan_photo)
     loan_b64 = file_to_base64(loan_detail_photo)
     
-    # For NGO applications, we don't link the farmer profile to the NGO's user_id
-    # This avoids the One-to-One constraint and allows multiple farmers per NGO
+    
     farmer_user_id = current_user.id if apply_type != "NGO" else None
 
-    # Auto-populate NGO name if applying as NGO
+    
     if apply_type == "NGO" and current_user.ngo_profile:
         ngo_name_ref = current_user.ngo_profile.name
 
@@ -84,11 +83,11 @@ def apply_as_farmer(
     
     db.add(new_farmer)
 
-    # Only update role if applying for self
+    
     if apply_type != "NGO":
         current_user.role = "farmer"
         db.add(current_user)
-        # Create token for self-registered farmer
+        
         access_token = auth.create_access_token(data={"sub": current_user.email})
         new_farmer.access_token = access_token
         new_farmer.token_type = "bearer"
@@ -147,7 +146,7 @@ def approve_farmer(farmer_id: int, db: Session = Depends(database.get_db), curre
         raise HTTPException(status_code=404, detail="Farmer not found")
     
     farmer.is_approved = True
-    farmer.is_declined = False # Ensure it's not declined if approved
+    farmer.is_declined = False 
     db.commit()
     db.refresh(farmer)
     return farmer
