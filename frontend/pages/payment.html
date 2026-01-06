@@ -13,7 +13,8 @@
   <header class="navbar">
     <input type="checkbox" id="menu-toggle" class="toggle">
     <label for="menu-toggle" class="icon">&#9776;</label>
-    <div class="site-name"><a href="../index.html"><img src="../assets/uzhavan_logo-removebg-preview.png" alt="logo"/></a></div>
+    <div class="site-name"><a href="../index.html"><img src="../assets/uzhavan_logo-removebg-preview.png"
+          alt="logo" /></a></div>
 
     <input type="checkbox" id="profile-toggle" class="toggle">
     <label for="profile-toggle" class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
@@ -49,7 +50,7 @@
           <div class="payment-methods">
             <label class="method-label">
               <input type="radio" name="paymentMethod" value="UPI" checked>
-               UPI
+              UPI
             </label>
             <label class="method-label">
               <input type="radio" name="paymentMethod" value="Card">
@@ -136,6 +137,14 @@
       <p>© 2025 Uzhavan Connect | Designed for Farmers’ Empowerment </p>
     </div>
   </footer>
+
+  <div id="customDialog" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <p id="dialogMessage"></p>
+      <button id="dialogOkBtn">OK</button>
+    </div>
+  </div>
 
   <script src="../js/config.js"></script>
   <script src="../js/payment.js"></script>
