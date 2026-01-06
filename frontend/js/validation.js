@@ -20,6 +20,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
+        // Verify Admin Role
+        try {
+            const userResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (userResponse.ok) {
+                const user = await userResponse.json();
+                if (user.role !== 'admin') {
+                    alert('Access denied: Admins only');
+                    window.location.href = '../index.html';
+                    return;
+                }
+            } else {
+                // If we can't verify the user, it might be an invalid token or server error.
+                // Safer to force login again or redirect.
+                console.error("Failed to verify user role");
+                // Optional: window.location.href = 'sign-up.html';
+            }
+
+        } catch (error) {
+            console.error("Error verifying user role:", error);
+        }
+
+
         if (response.ok) {
             const farmer = await response.json();
             renderFarmerDetails(farmer);

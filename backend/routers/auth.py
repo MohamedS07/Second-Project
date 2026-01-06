@@ -89,3 +89,7 @@ def login_for_access_token(user_credentials: schemas.UserLogin, db: Session = De
             status_code=500,
             detail=f"Login failed: {str(e)}"
         )
+
+@router.get("/me", response_model=schemas.UserResponse)
+def read_users_me(current_user: models.User = Depends(auth.get_current_user)):
+    return current_user
