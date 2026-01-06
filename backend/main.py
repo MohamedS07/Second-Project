@@ -83,3 +83,24 @@ def debug_check():
     if setup_error:
         return {"status": "error", "message": "Backend startup failed", "detail": setup_error}
     return {"status": "debug", "message": "Debug works"}
+
+@app.get("/api/db-test")
+def test_db_connection():
+    try:
+        from sqlalchemy import text
+        from backend import database
+        
+        # Test connection
+        with database.engine.connect() as connection:
+            result = connection.execute(text("SELECT 1"))
+            return {"status": "success", "message": "Database connection successful", "result": result.scalar()}
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={
+                "status": "error", 
+                "message": "Database connection failed", 
+                "detail": str(e),
+                "type": type(e).__name__
+            }
+        )
