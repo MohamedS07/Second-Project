@@ -14,7 +14,7 @@ def test_full_flow():
     
     print(f"Testing Full Flow with {email}...")
     
-    # 1. Register
+    
     print("1. Registering...")
     reg_payload = {
         "name": "Test User",
@@ -33,7 +33,7 @@ def test_full_flow():
             
         print("Registration Successful.")
         
-        # 2. Login
+        
         print("2. Logging in...")
         login_payload = {
             "email": email,

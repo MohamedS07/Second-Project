@@ -6,7 +6,7 @@ API_URL = "https://uzhavan-connect.vercel.app/api/auth/login"
 def test_login():
     print(f"Testing Login at {API_URL}...")
     
-    # payload with dummy data
+    
     payload = {
         "email": "test@example.com",
         "password": "password123"
