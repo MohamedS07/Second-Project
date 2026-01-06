@@ -40,43 +40,52 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(database.get_d
 
 @router.post("/login", response_model=schemas.Token)
 def login_for_access_token(user_credentials: schemas.UserLogin, db: Session = Depends(database.get_db)):
-    user = db.query(models.User).filter(models.User.email == user_credentials.email).first()
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    if not auth.verify_password(user_credentials.password, user.hashed_password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
-    access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = auth.create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
-    )
-    
-    
-    has_profile = False
-    profile_type = None
-    
-    if user.farmer_profile:
-        has_profile = True
-        profile_type = "farmer"
-    elif user.donor_profile:
-        has_profile = True
-        profile_type = "donor"
-    elif user.ngo_profile:
-        has_profile = True
-        profile_type = "ngo"
+    try:
+        user = db.query(models.User).filter(models.User.email == user_credentials.email).first()
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect username or password",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        if not auth.verify_password(user_credentials.password, user.hashed_password):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect username or password",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
         
-    return {
-        "access_token": access_token, 
-        "token_type": "bearer",
-        "role": user.role,
-        "has_profile": has_profile,
-        "profile_type": profile_type
-    }
+        access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = auth.create_access_token(
+            data={"sub": user.email}, expires_delta=access_token_expires
+        )
+        
+        has_profile = False
+        profile_type = None
+        
+        if user.farmer_profile:
+            has_profile = True
+            profile_type = "farmer"
+        elif user.donor_profile:
+            has_profile = True
+            profile_type = "donor"
+        elif user.ngo_profile:
+            has_profile = True
+            profile_type = "ngo"
+            
+        return {
+            "access_token": access_token, 
+            "token_type": "bearer",
+            "role": user.role,
+            "has_profile": has_profile,
+            "profile_type": profile_type
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Login failed: {str(e)}"
+        )
