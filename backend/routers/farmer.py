@@ -6,7 +6,7 @@ from backend import database, models, schemas, auth
 
 router = APIRouter()
 
-# Base64 helper
+
 def file_to_base64(file: UploadFile) -> str:
     if not file:
         return None
