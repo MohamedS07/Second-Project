@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     window.location.href = `validation.html?id=${farmer.id}`;
                 };
 
-                const photoUrl = farmer.photo_path ? getFileUrl(farmer.photo_path) : '../assets/farmer (2).jpg'; // Fallback image
+                const photoUrl = farmer.photo_path ? getFileUrl(farmer.photo_path) : '../assets/farmer (2).jpg'; 
 
                 card.innerHTML = `
                     <div style="display:flex; align-items:center; width:100%;">
