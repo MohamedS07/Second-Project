@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-    // Add modal HTML to body
+    
     const modalHtml = `
         <div id="imageModal" class="modal-overlay">
             <div class="modal-content">
