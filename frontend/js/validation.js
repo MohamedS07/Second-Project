@@ -92,7 +92,7 @@ function closeModal() {
     document.getElementById('imageModal').style.display = 'none';
 }
 
-// Close modal when clicking outside
+
 window.onclick = function (event) {
     const modal = document.getElementById('imageModal');
     if (event.target == modal) {
@@ -135,12 +135,12 @@ async function handleValidation(id, action) {
 
     try {
         let url = `${API_BASE_URL}/api/farmers/${id}`;
-        let method = 'DELETE'; // Default is delete (rarely used now)
+        let method = 'DELETE'; 
 
         if (action === 'approve') {
             url = `${API_BASE_URL}/api/farmers/${id}/approve`;
             method = 'PUT';
-        } else if (action === 'delete') { // We use 'delete' string for button, but it now means decline
+        } else if (action === 'delete') { 
             url = `${API_BASE_URL}/api/farmers/${id}/decline`;
             method = 'PUT';
         }
