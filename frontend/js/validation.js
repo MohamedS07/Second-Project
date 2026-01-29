@@ -34,10 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return;
                 }
             } else {
-                // If we can't verify the user, it might be an invalid token or server error.
-                // Safer to force login again or redirect.
+                
                 console.error("Failed to verify user role");
-                // Optional: window.location.href = 'sign-up.html';
+                
             }
 
         } catch (error) {
