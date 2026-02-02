@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         msgElem.innerText = message;
         dialog.style.display = 'block';
 
-        // Clean up previous event listeners to avoid duplication
+        
         const newOkBtn = okBtn.cloneNode(true);
         okBtn.parentNode.replaceChild(newOkBtn, okBtn);
 
         const newCloseBtn = closeBtn.cloneNode(true);
         closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
 
-        // Re-select buttons after replacement
+        
         const currentOkBtn = document.getElementById('dialogOkBtn');
         const currentCloseBtn = document.querySelector('.close-btn');
 
@@ -85,9 +85,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     methodRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
-            // hide all
+            
             Object.values(sections).forEach(el => el.style.display = 'none');
-            // show selected
+            
             sections[e.target.value].style.display = 'block';
         });
     });

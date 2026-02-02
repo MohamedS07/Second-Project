@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const data = JSON.parse(responseText);
                         errorMessage = data.detail || JSON.stringify(data);
                     } catch (e) {
-                        // If not JSON, it's likely an HTML error page (500/404)
+                        
                         errorMessage = responseText || response.statusText;
                     }
                     alert(`Error: ${errorMessage}`);
