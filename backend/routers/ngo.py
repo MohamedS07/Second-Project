@@ -35,7 +35,7 @@ def register_ngo(
     if db.query(models.NGO).filter(models.NGO.reg_number == reg_number).first():
          raise HTTPException(status_code=400, detail="NGO Registration number already exists")
 
-    # proof_path = save_file(proof_document, current_user.id, "ngo_proof") if proof_document else None
+    
     proof_b64 = file_to_base64(proof_document)
 
     new_ngo = models.NGO(
