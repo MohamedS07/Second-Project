@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         msgElem.innerText = message;
         dialog.style.display = 'block';
 
-        
+
         const newOkBtn = okBtn.cloneNode(true);
         okBtn.parentNode.replaceChild(newOkBtn, okBtn);
 
         const newCloseBtn = closeBtn.cloneNode(true);
         closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
 
-        
+
         const currentOkBtn = document.getElementById('dialogOkBtn');
         const currentCloseBtn = document.querySelector('.close-btn');
 
@@ -85,13 +85,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     methodRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
-            
+
             Object.values(sections).forEach(el => el.style.display = 'none');
-            
+
             sections[e.target.value].style.display = 'block';
         });
     });
 
+
+    // Inject Loader
+    if (!document.getElementById('loader-script')) {
+        const script = document.createElement('script');
+        script.id = 'loader-script';
+        script.src = '../js/loader.js';
+        document.body.appendChild(script);
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '../style/loader.css';
+        document.head.appendChild(link);
+    }
 
     document.getElementById('payBtn').addEventListener('click', async () => {
         const amount = document.getElementById('amountInput').value;
@@ -101,6 +114,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             showDialog('Please enter a valid amount (Min ₹50)');
             return;
         }
+
+        if (typeof showLoader === 'function') showLoader('Processing Payment...');
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/payments/process`, {
@@ -116,6 +131,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 })
             });
 
+            if (typeof hideLoader === 'function') hideLoader();
+
             if (response.ok) {
                 showDialog('Payment Successful! Thank you for your support.', () => {
                     window.location.href = 'donor-dashboard.html';
@@ -126,6 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } catch (e) {
             console.error(e);
+            if (typeof hideLoader === 'function') hideLoader();
             showDialog('Error processing payment');
         }
     });

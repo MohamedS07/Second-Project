@@ -34,9 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return;
                 }
             } else {
-                
+
                 console.error("Failed to verify user role");
-                
+
             }
 
         } catch (error) {
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-    
+
     const modalHtml = `
         <div id="imageModal" class="modal-overlay">
             <div class="modal-content">
@@ -71,6 +71,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.accept').addEventListener('click', () => handleValidation(farmerId, 'approve'));
     document.querySelector('.decline').addEventListener('click', () => handleValidation(farmerId, 'delete'));
 });
+
+// Inject Loader
+if (!document.getElementById('loader-script')) {
+    const script = document.createElement('script');
+    script.id = 'loader-script';
+    script.src = '../js/loader.js';
+    document.body.appendChild(script);
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '../style/loader.css';
+    document.head.appendChild(link);
+}
 
 
 function getFileUrl(path) {
@@ -133,14 +146,16 @@ async function handleValidation(id, action) {
     const token = localStorage.getItem('token');
     if (!confirm(`Are you sure you want to ${action} this application?`)) return;
 
+    if (typeof showLoader === 'function') showLoader('Processing...');
+
     try {
         let url = `${API_BASE_URL}/api/farmers/${id}`;
-        let method = 'DELETE'; 
+        let method = 'DELETE';
 
         if (action === 'approve') {
             url = `${API_BASE_URL}/api/farmers/${id}/approve`;
             method = 'PUT';
-        } else if (action === 'delete') { 
+        } else if (action === 'delete') {
             url = `${API_BASE_URL}/api/farmers/${id}/decline`;
             method = 'PUT';
         }
@@ -149,6 +164,8 @@ async function handleValidation(id, action) {
             method: method,
             headers: { 'Authorization': `Bearer ${token}` }
         });
+
+        if (typeof hideLoader === 'function') hideLoader();
 
         if (response.ok) {
             alert(`Application ${action}d successfully!`);
@@ -159,6 +176,7 @@ async function handleValidation(id, action) {
         }
     } catch (e) {
         console.error(e);
+        if (typeof hideLoader === 'function') hideLoader();
         alert('Error processing request');
     }
 }
