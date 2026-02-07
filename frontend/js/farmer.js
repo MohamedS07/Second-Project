@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            const submitBtn = farmerForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn ? submitBtn.innerText : 'Submit';
+            if (submitBtn) {
+                submitBtn.innerText = 'Applying...';
+                submitBtn.disabled = true;
+            }
+
             const formData = new FormData(farmerForm);
 
 
@@ -31,8 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('token', result.access_token);
                     }
 
+                    if (submitBtn) submitBtn.innerText = 'Submitted! Redirecting...';
+
                     if (formData.get('apply_type') === 'NGO') {
-                        alert('Application Submitted. Access is managed by the NGO.');
+                        // For NGO flow, we might keep an alert or just redirect. Plan said remove success alert.
+                        // But precise user requirement was "I don't want any alert option" initially, then "But I want alert calls for error message".
+                        // Use judgement: Redirecting immediately is fine.
+
                         window.location.href = 'ngo-dashboard.html';
                     } else {
                         window.location.href = 'farmer-dashboard.html';
@@ -47,10 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         errorMessage = responseText || response.statusText;
                     }
                     alert(`Error: ${errorMessage}`);
+                    if (submitBtn) {
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.disabled = false;
+                    }
                 }
             } catch (err) {
                 console.error(err);
                 alert(`Application failed: ${err.message}`);
+                if (submitBtn) {
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                }
             }
         });
     }

@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            const submitBtn = ngoForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn ? submitBtn.innerText : 'Submit';
+            if (submitBtn) {
+                submitBtn.innerText = 'Registering...';
+                submitBtn.disabled = true;
+            }
+
             const formData = new FormData(ngoForm);
 
             try {
@@ -30,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('token', result.access_token);
                     }
 
+                    if (submitBtn) submitBtn.innerText = 'Success! Redirecting...';
+
                     window.location.href = 'ngo-dashboard.html';
                 } else {
                     let errorMessage = "Unknown Error";
@@ -41,10 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         errorMessage = responseText || response.statusText;
                     }
                     alert(`Error: ${errorMessage}`);
+                    if (submitBtn) {
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.disabled = false;
+                    }
                 }
             } catch (err) {
                 console.error(err);
                 alert(`Registration failed: ${err.message}`);
+                if (submitBtn) {
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                }
             }
         });
     }
