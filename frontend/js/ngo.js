@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Inject Loader
+    if (!document.getElementById('loader-script')) {
+        const script = document.createElement('script');
+        script.id = 'loader-script';
+        script.src = '../js/loader.js';
+        document.body.appendChild(script);
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '../style/loader.css';
+        document.head.appendChild(link);
+    }
+
     const ngoForm = document.getElementById('ngoform');
 
     if (ngoForm) {
@@ -12,12 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const submitBtn = ngoForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn ? submitBtn.innerText : 'Submit';
-            if (submitBtn) {
-                submitBtn.innerText = 'Registering...';
-                submitBtn.disabled = true;
-            }
+            if (typeof showLoader === 'function') showLoader('Registering...');
 
             const formData = new FormData(ngoForm);
 
@@ -37,9 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('token', result.access_token);
                     }
 
-                    if (submitBtn) submitBtn.innerText = 'Success! Redirecting...';
+                    if (typeof showLoader === 'function') showLoader('Success! Redirecting...');
 
-                    window.location.href = 'ngo-dashboard.html';
+                    setTimeout(() => {
+                        window.location.href = 'ngo-dashboard.html';
+                    }, 1000);
                 } else {
                     let errorMessage = "Unknown Error";
                     const responseText = await response.text();
@@ -49,19 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     } catch (e) {
                         errorMessage = responseText || response.statusText;
                     }
+                    if (typeof hideLoader === 'function') hideLoader();
                     alert(`Error: ${errorMessage}`);
-                    if (submitBtn) {
-                        submitBtn.innerText = originalBtnText;
-                        submitBtn.disabled = false;
-                    }
                 }
             } catch (err) {
                 console.error(err);
+                if (typeof hideLoader === 'function') hideLoader();
                 alert(`Registration failed: ${err.message}`);
-                if (submitBtn) {
-                    submitBtn.innerText = originalBtnText;
-                    submitBtn.disabled = false;
-                }
             }
         });
     }
