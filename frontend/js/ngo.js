@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Inject Loader
+    
     if (!document.getElementById('loader-script')) {
         const script = document.createElement('script');
         script.id = 'loader-script';

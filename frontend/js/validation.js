@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        // Verify Admin Role
+        
         try {
             const userResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.decline').addEventListener('click', () => handleValidation(farmerId, 'delete'));
 });
 
-// Inject Loader
+
 if (!document.getElementById('loader-script')) {
     const script = document.createElement('script');
     script.id = 'loader-script';

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        // Fetch Donor Profile
+        
         const response = await fetch(`${API_BASE_URL}/api/donors/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Could not fetch profile data. Please make sure you are registered as a Donor.');
         }
 
-        // Fetch Farmers List
+        
         fetchFarmers(token);
 
     } catch (err) {
@@ -44,7 +44,7 @@ async function fetchFarmers(token) {
                 return;
             }
 
-            container.innerHTML = ''; // Clear loading text
+            container.innerHTML = ''; 
 
             if (farmers.length === 0) {
                 container.innerHTML = '<p>No farmers currently approved and seeking funds.</p>';

@@ -41,9 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (submitBtn) submitBtn.innerText = 'Submitted! Redirecting...';
 
                     if (formData.get('apply_type') === 'NGO') {
-                        // For NGO flow, we might keep an alert or just redirect. Plan said remove success alert.
-                        // But precise user requirement was "I don't want any alert option" initially, then "But I want alert calls for error message".
-                        // Use judgement: Redirecting immediately is fine.
+                        
 
                         window.location.href = 'ngo-dashboard.html';
                     } else {

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // Inject Loader
+    
     if (!document.getElementById('loader-script')) {
         const script = document.createElement('script');
         script.id = 'loader-script';
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'sign-up.html';
         return;
     }
-    // ... (rest of the file content remains mostly the same until deleteFarmer)
+    
 
     try {
         const response = await fetch(`${API_BASE_URL}/api/admin/stats`, {

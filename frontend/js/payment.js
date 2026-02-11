@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const farmerId = urlParams.get('farmerId');
     const token = localStorage.getItem('token');
 
-    // Custom Dialog Logic
+    
     const dialog = document.getElementById('customDialog');
     const msgElem = document.getElementById('dialogMessage');
     const okBtn = document.getElementById('dialogOkBtn');
