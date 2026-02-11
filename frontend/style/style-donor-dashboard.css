@@ -1,514 +1,498 @@
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background-color: #f9fafb;
+body  {
+     margin: 0;
+     font-family: "Poppins", sans-serif;
+     background-color: #f9fafb;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #3b7a57;
-  color: white;
-  padding: 10px 20px;
-  position: relative;
-  height: 50px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+ .navbar  {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     background-color: #3b7a57;
+     color: white;
+     padding: 10px 20px;
+     position: relative;
+     height: 50px;
+     position: sticky;
+     top: 0;
+     z-index: 1000;
 }
 
-.site-name {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  top: 4px;
+ .site-name  {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     position: relative;
+     top: 4px;
 }
 
-.site-name img {
-  height: 65px;
-  width: 155px;
+ .site-name img  {
+     height: 65px;
+     width: 155px;
 }
 
-.site-name a {
-  text-decoration: none;
-  color: white;
+ .site-name a  {
+     text-decoration: none;
+     color: white;
 }
 
-.icon {
-  font-size: 24px;
-  cursor: pointer;
-  transition: transform 0.3s;
+ .icon  {
+     font-size: 24px;
+     cursor: pointer;
+     transition: transform 0.3s;
 }
 
-.icon:hover {
-  transform: scale(1.1);
+ .icon:hover  {
+     transform: scale(1.1);
 }
 
-.toggle {
-  display: none;
+ .toggle  {
+     display: none;
 }
 
-.dropdown {
-  display: none;
-  position: absolute;
-  background-color: white;
-  color: black;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  z-index: 10;
+ .dropdown  {
+     display: none;
+     position: absolute;
+     background-color: white;
+     color: black;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     border-radius: 8px;
+     overflow: hidden;
+     z-index: 10;
 }
 
-.dropdown.left {
-  top: 50px;
-  left: 20px;
+ .dropdown.left  {
+     top: 50px;
+     left: 20px;
 }
 
-.dropdown.right {
-  top: 50px;
-  right: 20px;
+ .dropdown.right  {
+     top: 50px;
+     right: 20px;
 }
 
-.dropdown a {
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
-  color: black;
-  transition: background 0.2s;
+ .dropdown a  {
+     display: block;
+     padding: 10px 15px;
+     text-decoration: none;
+     color: black;
+     transition: background 0.2s;
 }
 
-.dropdown a:hover {
-  background-color: #e6f3e6;
+ .dropdown a:hover  {
+     background-color: #e6f3e6;
 }
 
-#menu-toggle:checked~.dropdown.left {
-  display: block;
-  animation: fadeIn 0.3s ease;
+ #menu-toggle:checked~.dropdown.left  {
+     display: block;
+     animation: fadeIn 0.3s ease;
 }
 
-#profile-toggle:checked~.dropdown.right {
-  display: block;
-  animation: fadeIn 0.3s ease;
+ #profile-toggle:checked~.dropdown.right  {
+     display: block;
+     animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+ @keyframes fadeIn  {
+     from  {
+     opacity: 0;
+     transform: translateY(-10px);
 }
 
-.container {
-  width: 1400px;
-  margin: 40px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
+ to  {
+     opacity: 1;
+     transform: translateY(0);
+}
 }
 
-.box {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ .container  {
+     width: 1400px;
+     margin: 40px auto;
+     display: flex;
+     flex-direction: column;
+     gap: 25px;
 }
 
-.box h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #333;
+ .box  {
+     background: #fff;
+     border: 1px solid #ddd;
+     border-radius: 10px;
+     padding: 25px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.status-box {
-  background: #fefafa;
+ .box h3  {
+     font-size: 18px;
+     margin-bottom: 10px;
+     color: #333;
 }
 
-.status-item {
-  margin-bottom: 8px;
-  font-size: 15px;
-  color: #444;
+ .status-box  {
+     background: #fefafa;
 }
 
-button a {
-  text-decoration: none;
-  color: white;
+ .status-item  {
+     margin-bottom: 8px;
+     font-size: 15px;
+     color: #444;
 }
 
-.donate {
-  width: 250px;
-  height: 50px;
-  border: none;
-  border-radius: 10px;
-  background-color: #3b7a57;
-  color: white;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
+ button a  {
+     text-decoration: none;
+     color: white;
 }
 
-.donor {
-  text-align: center;
-  margin-top: 50px;
-
+ .donate  {
+     width: 250px;
+     height: 50px;
+     border: none;
+     border-radius: 10px;
+     background-color: #3b7a57;
+     color: white;
+     font-family: 'Poppins', sans-serif;
+     cursor: pointer;
 }
 
-footer {
-  background-color: #3b7a57;
-  color: white;
-  padding: 40px 20px 10px;
-  font-family: "Poppins", sans-serif;
-  margin-top: 50px;
+ .donor  {
+     text-align: center;
+     margin-top: 50px;
 }
 
-.footer-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: auto;
+ footer  {
+     background-color: #3b7a57;
+     color: white;
+     padding: 40px 20px 10px;
+     font-family: "Poppins", sans-serif;
+     margin-top: 50px;
 }
 
-.footer-section-about {
-  position: relative;
-  right: 70px;
+ .footer-container  {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+     gap: 30px;
+     max-width: 1200px;
+     margin: auto;
 }
 
-.footer-section h2,
-.footer-section h3 {
-  color: #fff;
-  margin-bottom: 15px;
-  font-weight: 700;
+ .footer-section-about  {
+     position: relative;
+     right: 70px;
 }
 
-.footer-section p {
-  color: #f0f0f0;
-  line-height: 1.6;
-  font-size: 14px;
+ .footer-section h2, .footer-section h3  {
+     color: #fff;
+     margin-bottom: 15px;
+     font-weight: 700;
 }
 
-.footer-section ul {
-  list-style: none;
-  padding: 0;
+ .footer-section p  {
+     color: #f0f0f0;
+     line-height: 1.6;
+     font-size: 14px;
 }
 
-.footer-section ul li {
-  margin-bottom: 8px;
+ .footer-section ul  {
+     list-style: none;
+     padding: 0;
 }
 
-.footer-section ul li a {
-  color: #f0f0f0;
-  text-decoration: none;
-  transition: color 0.3s ease;
+ .footer-section ul li  {
+     margin-bottom: 8px;
 }
 
-.footer-section ul li a:hover {
-  color: #ffd700;
+ .footer-section ul li a  {
+     color: #f0f0f0;
+     text-decoration: none;
+     transition: color 0.3s ease;
 }
 
-.social-icons a {
-  font-size: 22px;
-  color: white;
-  margin-right: 10px;
-  text-decoration: none;
-  transition: 0.3s ease;
+ .footer-section ul li a:hover  {
+     color: #ffd700;
 }
 
-.footer-section-social {
-  text-align: left;
-  position: relative;
-  left: 100px;
+ .social-icons a  {
+     font-size: 22px;
+     color: white;
+     margin-right: 10px;
+     text-decoration: none;
+     transition: 0.3s ease;
 }
 
-.footer-section-social h3 {
-  color: #fff;
-  margin-bottom: 15px;
+ .footer-section-social  {
+     text-align: left;
+     position: relative;
+     left: 100px;
 }
 
-.social-icons {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
+ .footer-section-social h3  {
+     color: #fff;
+     margin-bottom: 15px;
 }
 
-.social-icons a {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  font-size: 18px;
-  color: #fff;
-  background: #4a8f68;
-  text-decoration: none;
-  transition: all 0.3s ease;
+ .social-icons  {
+     display: flex;
+     gap: 15px;
+     margin-top: 10px;
 }
 
-
-.social-icons a.facebook:hover {
-  background: #1877f2;
+ .social-icons a  {
+     display: inline-flex;
+     justify-content: center;
+     align-items: center;
+     width: 38px;
+     height: 38px;
+     border-radius: 50%;
+     font-size: 18px;
+     color: #fff;
+     background: #4a8f68;
+     text-decoration: none;
+     transition: all 0.3s ease;
 }
 
-.social-icons a.instagram:hover {
-  background: #e4405f;
+ .social-icons a.facebook:hover  {
+     background: #1877f2;
 }
 
-.social-icons a.twitter:hover {
-  background: #1da1f2;
+ .social-icons a.instagram:hover  {
+     background: #e4405f;
 }
 
-.social-icons a:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+ .social-icons a.twitter:hover  {
+     background: #1da1f2;
 }
 
-
-.social-icons a:hover {
-  color: white;
+ .social-icons a:hover  {
+     transform: translateY(-4px);
+     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-.social-icons a:hover {
-  color: #ffd700;
+ .social-icons a:hover  {
+     color: white;
 }
 
-/* Emotional Impact Section */
-.emotional-impact {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  margin-bottom: 25px;
-  padding: 40px;
-  text-align: center;
-  border-left: 5px solid #3b7a57;
-  /* specific accent for text-only version */
+ .social-icons a:hover  {
+     color: #ffd700;
 }
 
-/* Removed impact-image styles */
-
-.impact-content {
-  /* Removed flex and padding since parent handles it now */
-  max-width: 800px;
-  margin: 0 auto;
+ /* Emotional Impact Section */ .emotional-impact  {
+     background: #fff;
+     border-radius: 12px;
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+     margin-bottom: 25px;
+     padding: 40px;
+     text-align: center;
+     border-left: 5px solid #3b7a57;
+     /* specific accent for text-only version */ 
 }
 
-.impact-content h3 {
-  font-size: 26px;
-  /* Slightly larger for emphasis */
-  color: #2c5c42;
-  margin-bottom: 20px;
-  font-weight: 700;
+ /* Removed impact-image styles */ .impact-content  {
+     /* Removed flex and padding since parent handles it now */ max-width: 800px;
+     margin: 0 auto;
 }
 
-.impact-content p {
-  font-size: 16px;
-  color: #555;
-  line-height: 1.8;
-  margin: 0;
+ .impact-content h3  {
+     font-size: 26px;
+     /* Slightly larger for emphasis */ color: #2c5c42;
+     margin-bottom: 20px;
+     font-weight: 700;
 }
 
-/* Removed media query for image responsiveness as it is no longer needed */
-
-.footer-bottom {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  padding-top: 10px;
-  color: #e0e0e0;
+ .impact-content p  {
+     font-size: 16px;
+     color: #555;
+     line-height: 1.8;
+     margin: 0;
 }
 
-@media screen and (max-width: 426px) {
-
-  .navbar {
-    padding: 10px 15px;
-  }
-
-  .site-name {
-    position: relative;
-    top: 4px;
-    left: 10px;
-  }
-
-  .site-name img {
-    height: 50px;
-    width: 105px;
-  }
-
-  .icon {
-    font-size: 22px;
-  }
-
-  .dropdown.left {
-    width: 100px;
-    left: 10%;
-    right: 10%;
-  }
-
-  .dropdown.right {
-    width: 100px;
-  }
-
-  .container {
-    width: 100%;
-    margin: 20px auto;
-    padding: 0 15px;
-    gap: 18px;
-  }
-
-  .box {
-    padding: 18px;
-  }
-
-  .box h3 {
-    font-size: 16px;
-  }
-
-  .status-item {
-    font-size: 14px;
-  }
-
-  .donor {
-    margin-top: 30px;
-    padding: 0 15px;
-  }
-
-  .donate {
-    width: 100%;
-    height: 46px;
-    font-size: 15px;
-  }
-
-
-
-  footer {
-    padding: 25px 10px;
-  }
-
-  .footer-container {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    text-align: center;
-  }
-
-  .footer-section-social {
-    left: 0;
-  }
-
-  .social-icons {
-    justify-content: center;
-  }
-
-  .footer-section-social a {
-    position: relative;
-    right: 30px;
-  }
-
-  .footer-bottom {
-    font-size: 12px;
-  }
-
-  .social-icons a.facebook:hover {
-    background: #1877f2;
-  }
-
-  .social-icons a.instagram:hover {
-    background: #e4405f;
-  }
-
-  .social-icons a.twitter:hover {
-    background: #1da1f2;
-  }
-
-  .social-icons a:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  }
-
-
-  .social-icons a:hover {
-    color: white;
-  }
+ /* Removed media query for image responsiveness as it is no longer needed */ .footer-bottom  {
+     text-align: center;
+     margin-top: 30px;
+     font-size: 14px;
+     border-top: 1px solid rgba(255, 255, 255, 0.3);
+     padding-top: 10px;
+     color: #e0e0e0;
 }
 
-@media screen and (max-width: 769px) {
+ @media screen and (max-width: 426px)  {
+     .navbar  {
+     padding: 10px 15px;
+}
 
-  .container {
-    width: 100%;
-    margin: 30px auto;
-    padding: 0 25px;
-  }
+ .site-name  {
+     position: relative;
+     top: 4px;
+     left: 10px;
+}
 
-  .box {
-    padding: 22px;
-  }
+ .site-name img  {
+     height: 50px;
+     width: 105px;
+}
 
-  .box h3 {
-    font-size: 17px;
-  }
+ .icon  {
+     font-size: 22px;
+}
 
-  .status-item {
-    font-size: 14.5px;
-  }
+ .dropdown.left  {
+     width: 100px;
+     left: 10%;
+     right: 10%;
+}
 
-  .donate {
-    width: 300px;
-    height: 48px;
-    font-size: 15px;
-  }
+ .dropdown.right  {
+     width: 100px;
+}
 
-  .footer-section-about {
-    right: 0;
-    text-align: center;
-  }
+ .container  {
+     width: 100%;
+     margin: 20px auto;
+     padding: 0 15px;
+     gap: 18px;
+}
 
-  .footer-section-contact {
-    text-align: center;
-    position: relative;
-  }
+ .box  {
+     padding: 18px;
+}
 
-  .footer-section-contact p {
-    font-size: 13px;
-  }
+ .box h3  {
+     font-size: 16px;
+}
 
-  .footer-section-social {
-    left: 0;
-    text-align: center;
-  }
+ .status-item  {
+     font-size: 14px;
+}
 
-  .footer-section-social a {
-    position: relative;
-    left: 35px;
-  }
+ .donor  {
+     margin-top: 30px;
+     padding: 0 15px;
+}
 
-  .footer-container {
-    text-align: center;
-  }
+ .donate  {
+     width: 100%;
+     height: 46px;
+     font-size: 15px;
+}
 
-  .social-icons a.facebook:hover {
-    background: #1877f2;
-  }
+ footer  {
+     padding: 25px 10px;
+}
 
-  .social-icons a.instagram:hover {
-    background: #e4405f;
-  }
+ .footer-container  {
+     grid-template-columns: 1fr;
+     gap: 20px;
+     text-align: center;
+}
 
-  .social-icons a.twitter:hover {
-    background: #1da1f2;
-  }
+ .footer-section-social  {
+     left: 0;
+}
 
-  .social-icons a:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  }
+ .social-icons  {
+     justify-content: center;
+}
 
-  .social-icons a:hover {
-    color: white;
-  }
+ .footer-section-social a  {
+     position: relative;
+     right: 30px;
+}
+
+ .footer-bottom  {
+     font-size: 12px;
+}
+
+ .social-icons a.facebook:hover  {
+     background: #1877f2;
+}
+
+ .social-icons a.instagram:hover  {
+     background: #e4405f;
+}
+
+ .social-icons a.twitter:hover  {
+     background: #1da1f2;
+}
+
+ .social-icons a:hover  {
+     transform: translateY(-4px);
+     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+ .social-icons a:hover  {
+     color: white;
+}
+}
+
+ @media screen and (max-width: 769px)  {
+     .container  {
+     width: 100%;
+     margin: 30px auto;
+     padding: 0 25px;
+}
+
+ .box  {
+     padding: 22px;
+}
+
+ .box h3  {
+     font-size: 17px;
+}
+
+ .status-item  {
+     font-size: 14.5px;
+}
+
+ .donate  {
+     width: 300px;
+     height: 48px;
+     font-size: 15px;
+}
+
+ .footer-section-about  {
+     right: 0;
+     text-align: center;
+}
+
+ .footer-section-contact  {
+     text-align: center;
+     position: relative;
+}
+
+ .footer-section-contact p  {
+     font-size: 13px;
+}
+
+ .footer-section-social  {
+     left: 0;
+     text-align: center;
+}
+
+ .footer-section-social a  {
+     position: relative;
+     left: 35px;
+}
+
+ .footer-container  {
+     text-align: center;
+}
+
+ .social-icons a.facebook:hover  {
+     background: #1877f2;
+}
+
+ .social-icons a.instagram:hover  {
+     background: #e4405f;
+}
+
+ .social-icons a.twitter:hover  {
+     background: #1da1f2;
+}
+
+ .social-icons a:hover  {
+     transform: translateY(-4px);
+     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+ .social-icons a:hover  {
+     color: white;
+}
 }

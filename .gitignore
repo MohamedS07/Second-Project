@@ -6,7 +6,8 @@ __pycache__/
 env/
 venv/
 .venv/
+backend/venv/
 project/
 *.db
-
-.DS_Store
+.env
+backend/uploads/
