@@ -19,14 +19,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-
             document.getElementById('farmerName').innerText = farmer.name;
 
-
+            // ── Application status chip ──
             const statusEl = document.getElementById('appStatus');
             if (farmer.is_declined) {
                 statusEl.innerText = 'Declined';
                 statusEl.style.color = 'red';
+
+                // Show the decline reason box if a reason exists
+                const reasonBox = document.getElementById('declineReasonBox');
+                const reasonMsg = document.getElementById('declineReasonMsg');
+                if (reasonBox && reasonMsg) {
+                    reasonBox.style.display = 'block';
+                    if (farmer.decline_reason && farmer.decline_reason.trim()) {
+                        reasonMsg.innerText = farmer.decline_reason;
+                    } else {
+                        reasonMsg.innerText = 'No specific reason was provided by the administrator.';
+                        reasonMsg.style.fontStyle = 'italic';
+                        reasonMsg.style.color = '#888';
+                    }
+                }
+
             } else if (farmer.is_approved) {
                 statusEl.innerText = 'Approved';
                 statusEl.style.color = 'green';
@@ -35,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 statusEl.style.color = 'orange';
             }
 
-
+            // ── Amounts ──
             const loanAmount = parseFloat(farmer.loan_amount) || 0;
             const amountRaised = farmer.amount_raised || 0;
             const pendingAmount = loanAmount - amountRaised;

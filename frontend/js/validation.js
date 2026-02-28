@@ -1,78 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const farmerId = urlParams.get('id');
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-        window.location.href = 'sign-up.html';
-        return;
-    }
-
-    if (!farmerId) {
-        alert('No farmer specified');
-        window.location.href = 'admin.html';
-        return;
-    }
-
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/farmers/${farmerId}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        
-        try {
-            const userResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-
-            if (userResponse.ok) {
-                const user = await userResponse.json();
-                if (user.role !== 'admin') {
-                    alert('Access denied: Admins only');
-                    window.location.href = '../index.html';
-                    return;
-                }
-            } else {
-
-                console.error("Failed to verify user role");
-
-            }
-
-        } catch (error) {
-            console.error("Error verifying user role:", error);
-        }
-
-
-        if (response.ok) {
-            const farmer = await response.json();
-            renderFarmerDetails(farmer);
-        } else {
-            alert('Failed to fetch farmer details');
-            window.location.href = 'admin.html';
-        }
-    } catch (err) {
-        console.error(err);
-    }
-
-
-
-
-    const modalHtml = `
-        <div id="imageModal" class="modal-overlay">
-            <div class="modal-content">
-                <button class="modal-close" onclick="closeModal()">&times;</button>
-                <img id="modalImage" src="" alt="Document Preview">
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-    document.querySelector('.accept').addEventListener('click', () => handleValidation(farmerId, 'approve'));
-    document.querySelector('.decline').addEventListener('click', () => handleValidation(farmerId, 'delete'));
-});
-
-
+// ─── Loader injection ───────────────────────
 if (!document.getElementById('loader-script')) {
     const script = document.createElement('script');
     script.id = 'loader-script';
@@ -85,7 +11,88 @@ if (!document.getElementById('loader-script')) {
     document.head.appendChild(link);
 }
 
+// ─── Store farmerId globally for modal use ───
+let _farmerId = null;
 
+document.addEventListener('DOMContentLoaded', async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    _farmerId = urlParams.get('id');
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        window.location.href = 'sign-up.html';
+        return;
+    }
+
+    if (!_farmerId) {
+        alert('No farmer specified');
+        window.location.href = 'admin.html';
+        return;
+    }
+
+    // ── Verify admin role ──
+    try {
+        const userResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (userResponse.ok) {
+            const user = await userResponse.json();
+            if (user.role !== 'admin') {
+                alert('Access denied: Admins only');
+                window.location.href = '../index.html';
+                return;
+            }
+        } else {
+            console.error('Failed to verify user role');
+        }
+    } catch (error) {
+        console.error('Error verifying user role:', error);
+    }
+
+    // ── Fetch farmer details ──
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/farmers/${_farmerId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+            const farmer = await response.json();
+            renderFarmerDetails(farmer);
+        } else {
+            alert('Failed to fetch farmer details');
+            window.location.href = 'admin.html';
+        }
+    } catch (err) {
+        console.error(err);
+    }
+
+    // ── Image preview modal ──
+    const modalHtml = `
+        <div id="imageModal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <img id="modalImage" src="" alt="Document Preview">
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    // ── Button wiring ──
+    document.querySelector('.accept').addEventListener('click', () => handleValidation(_farmerId, 'approve'));
+
+    // Decline opens the reason modal instead of calling directly
+    document.querySelector('.decline').addEventListener('click', () => openDeclineModal());
+
+    // Character counter
+    const textarea = document.getElementById('declineReasonInput');
+    if (textarea) {
+        textarea.addEventListener('input', () => {
+            document.getElementById('charCount').textContent = textarea.value.length;
+        });
+    }
+});
+
+// ─── Image modal ────────────────────────────
 function getFileUrl(path) {
     if (!path) return '';
     if (path.startsWith('http') || path.startsWith('data:')) {
@@ -105,14 +112,37 @@ function closeModal() {
     document.getElementById('imageModal').style.display = 'none';
 }
 
-
 window.onclick = function (event) {
     const modal = document.getElementById('imageModal');
-    if (event.target == modal) {
-        closeModal();
-    }
+    if (event.target == modal) closeModal();
+};
+
+// ─── Decline reason modal ────────────────────
+function openDeclineModal() {
+    const modal = document.getElementById('declineModal');
+    modal.style.display = 'flex';
+    document.getElementById('declineReasonInput').value = '';
+    document.getElementById('charCount').textContent = '0';
 }
 
+function closeDeclineModal() {
+    document.getElementById('declineModal').style.display = 'none';
+}
+
+// exposed to the confirm button in HTML
+window.closeDeclineModal = closeDeclineModal;
+
+window.confirmDecline = async function () {
+    const reason = document.getElementById('declineReasonInput').value.trim();
+    if (!reason) {
+        alert('Please enter a reason before declining.');
+        return;
+    }
+    closeDeclineModal();
+    await handleValidation(_farmerId, 'delete', reason);
+};
+
+// ─── Render farmer details ───────────────────
 function renderFarmerDetails(farmer) {
     document.querySelector('.details').innerHTML = `
         <div style="width:200px; height:200px; background:#eee; display:flex; justify-content:center; align-items:center; color:#888; overflow:hidden;">
@@ -125,7 +155,12 @@ function renderFarmerDetails(farmer) {
             <p><strong>Phone:</strong> ${farmer.phone}</p>
             <p><strong>Loan Amount:</strong> ₹${farmer.loan_amount}</p>
             <p><strong>Apply Type:</strong> ${farmer.apply_type}</p>
-             <p><strong>Status:</strong> ${farmer.is_approved ? '<span style="color:green">Approved</span>' : '<span style="color:orange">Pending</span>'}</p>
+            <p><strong>Status:</strong> ${farmer.is_declined
+            ? '<span style="color:#c0392b; font-weight:bold;">Rejected</span>'
+            : farmer.is_approved
+                ? '<span style="color:green; font-weight:bold;">Approved</span>'
+                : '<span style="color:orange; font-weight:bold;">Pending</span>'
+        }</p>
             <div style="margin-top:10px;">
                 <p><strong>Documents:</strong></p>
                 ${farmer.aadhar_photo_path ? `<a href="#" onclick="openModal('${getFileUrl(farmer.aadhar_photo_path)}'); return false;">Aadhar</a>` : ''} 
@@ -135,40 +170,52 @@ function renderFarmerDetails(farmer) {
         </div>
     `;
 
-
     if (farmer.is_approved) {
         document.querySelector('.accept').style.display = 'none';
-        document.querySelector('.valid').innerHTML += '<p style="color:green; font-weight:bold;">Already Approved</p>';
+        document.querySelector('.decline').style.display = 'none';
+        document.querySelector('.valid').innerHTML += '<p style="color:green; font-weight:bold; margin-top:15px;">✅ Already Approved</p>';
+    } else if (farmer.is_declined) {
+        document.querySelector('.accept').style.display = 'none';
+        document.querySelector('.decline').style.display = 'none';
+        document.querySelector('.valid').innerHTML += '<p style="color:#c0392b; font-weight:bold; margin-top:15px;">❌ Already Rejected</p>';
     }
 }
 
-async function handleValidation(id, action) {
+// ─── Handle approval or decline API call ─────
+async function handleValidation(id, action, declineReason = '') {
     const token = localStorage.getItem('token');
-    if (!confirm(`Are you sure you want to ${action} this application?`)) return;
 
     if (typeof showLoader === 'function') showLoader('Processing...');
 
     try {
-        let url = `${API_BASE_URL}/api/farmers/${id}`;
-        let method = 'DELETE';
+        let url;
+        let method;
+        let body = null;
+        let headers = { 'Authorization': `Bearer ${token}` };
 
         if (action === 'approve') {
             url = `${API_BASE_URL}/api/farmers/${id}/approve`;
             method = 'PUT';
-        } else if (action === 'delete') {
+        } else {
+            // decline — send reason as form data
             url = `${API_BASE_URL}/api/farmers/${id}/decline`;
             method = 'PUT';
+            const form = new FormData();
+            form.append('decline_reason', declineReason);
+            body = form;
         }
 
         const response = await fetch(url, {
-            method: method,
-            headers: { 'Authorization': `Bearer ${token}` }
+            method,
+            headers,
+            body
         });
 
         if (typeof hideLoader === 'function') hideLoader();
 
         if (response.ok) {
-            alert(`Application ${action}d successfully!`);
+            const label = action === 'approve' ? 'Approved' : 'Declined';
+            alert(`Application ${label} successfully!`);
             window.location.href = 'admin.html';
         } else {
             const err = await response.json();

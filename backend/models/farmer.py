@@ -28,6 +28,7 @@ class Farmer(Base):
 
     is_approved = Column(Boolean, default=False)
     is_declined = Column(Boolean, default=False)
+    decline_reason = Column(Text, nullable=True)
     amount_raised = Column(Integer, default=0) 
     
     user = relationship("User", back_populates="farmer_profile")

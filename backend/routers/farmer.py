@@ -3,6 +3,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from backend import database, models, schemas, auth
+from pydantic import BaseModel
 
 router = APIRouter()
 
@@ -152,7 +153,12 @@ def approve_farmer(farmer_id: int, db: Session = Depends(database.get_db), curre
     return farmer
 
 @router.put("/{farmer_id}/decline", response_model=schemas.FarmerResponse)
-def decline_farmer(farmer_id: int, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
+def decline_farmer(
+    farmer_id: int,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(auth.get_current_user),
+    decline_reason: Optional[str] = Form(None)
+):
     if current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Not authorized")
         
@@ -162,6 +168,8 @@ def decline_farmer(farmer_id: int, db: Session = Depends(database.get_db), curre
     
     farmer.is_approved = False
     farmer.is_declined = True
+    if decline_reason:
+        farmer.decline_reason = decline_reason
     db.commit()
     db.refresh(farmer)
     return farmer

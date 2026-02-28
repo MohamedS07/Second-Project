@@ -27,6 +27,7 @@ class FarmerResponse(FarmerBase):
     loan_detail_photo_path: Optional[str]
     is_approved: bool
     is_declined: bool
+    decline_reason: Optional[str] = None
     amount_raised: int = 0
     
     access_token: Optional[str] = None
