@@ -1,13 +1,10 @@
-// ─────────────────────────────────────────────
-//  Admin Dashboard – Pending / Approved / Rejected tabs
-// ─────────────────────────────────────────────
 
-let allFarmers = [];          // full list fetched once
-let currentTab = 'pending';   // default tab
+
+let allFarmers = [];          
+let currentTab = 'pending';   
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-    // ── inject loader if needed ──
     if (!document.getElementById('loader-script')) {
         const script = document.createElement('script');
         script.id = 'loader-script';
@@ -27,7 +24,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // ── Pie chart ──
     try {
         const response = await fetch(`${API_BASE_URL}/api/admin/stats`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -50,7 +46,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    // ── Fetch all farmers ──
     try {
         if (typeof showLoader === 'function') showLoader('Loading farmers...');
         const response = await fetch(`${API_BASE_URL}/api/farmers/list?limit=500`, {
@@ -61,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok) {
             allFarmers = await response.json();
             updateBadges();
-            renderTab('pending');   // default: show pending
+            renderTab('pending');
         }
     } catch (err) {
         console.error(err);
@@ -69,18 +64,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// ─── Tab switching ───────────────────────────────────────
 window.switchTab = function (tab) {
     currentTab = tab;
 
-    // update button active state
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`tab-${tab}`).classList.add('active');
 
     renderTab(tab);
 };
 
-// ─── Update badge counts ──────────────────────────────────
 function updateBadges() {
     const pending = allFarmers.filter(f => !f.is_approved && !f.is_declined).length;
     const approved = allFarmers.filter(f => f.is_approved).length;
@@ -91,7 +83,7 @@ function updateBadges() {
     document.getElementById('badge-rejected').textContent = rejected;
 }
 
-// ─── Render farmer cards for a given tab ─────────────────
+
 function renderTab(tab) {
     const listContainer = document.getElementById('farmerList');
 
@@ -165,7 +157,6 @@ function renderTab(tab) {
     });
 }
 
-// ─── Helpers ─────────────────────────────────────────────
 function getFileUrl(path) {
     if (!path) return '';
     if (path.startsWith('http') || path.startsWith('data:')) {
