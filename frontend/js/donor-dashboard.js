@@ -73,6 +73,7 @@ async function fetchFarmers(token) {
                     <p>Village: ${farmer.village}, ${farmer.district}</p>
                      <p><strong>Raised:</strong> ₹${raised}</p>
                      <p><strong>Pending:</strong> <span style="color:red">₹${pending}</span></p>
+                     <p>Contact: ${farmer.phone}</p>
                   </div>
                   <button class="donate-btn" onclick="window.location.href='payment.html?farmerId=${farmer.id}'">Donate</button>
                 `;
