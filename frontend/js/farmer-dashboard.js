@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             document.getElementById('farmerName').innerText = farmer.name;
 
-            // ── Application status chip ──
+            
             const statusEl = document.getElementById('appStatus');
             if (farmer.is_declined) {
                 statusEl.innerText = 'Declined';
                 statusEl.style.color = 'red';
 
-                // Show the decline reason box if a reason exists
+                
                 const reasonBox = document.getElementById('declineReasonBox');
                 const reasonMsg = document.getElementById('declineReasonMsg');
                 if (reasonBox && reasonMsg) {
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 statusEl.style.color = 'orange';
             }
 
-            // ── Amounts ──
+            
             const loanAmount = parseFloat(farmer.loan_amount) || 0;
             const amountRaised = farmer.amount_raised || 0;
             const pendingAmount = loanAmount - amountRaised;
