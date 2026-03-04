@@ -21,16 +21,7 @@ def approve_farmer(farmer_id: int, approved: bool, db: Session = Depends(databas
     db.commit()
     return {"message": f"Farmer {'approved' if approved else 'rejected'}"}
 
-@router.put("/validate/ngo/{ngo_id}")
-def approve_ngo(ngo_id: int, approved: bool, db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
-    check_admin(current_user)
-    ngo = db.query(models.NGO).filter(models.NGO.id == ngo_id).first()
-    if not ngo:
-        raise HTTPException(status_code=404, detail="NGO not found")
-    
-    ngo.is_approved = approved
-    db.commit()
-    return {"message": f"NGO {'approved' if approved else 'rejected'}"}
+
 
 @router.get("/stats")
 def get_stats(db: Session = Depends(database.get_db), current_user: models.User = Depends(auth.get_current_user)):
