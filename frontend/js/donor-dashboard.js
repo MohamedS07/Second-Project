@@ -1,3 +1,4 @@
+import profile from "../assets/profile.png";
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -61,7 +62,7 @@ async function fetchFarmers(token) {
                 const card = document.createElement('div');
                 card.className = 'farmer-card';
 
-                const photoUrl = farmer.photo_path ? getFileUrl(farmer.photo_path) : '../assets/farmer (2).jpg';
+                const photoUrl = farmer.photo_path ? getFileUrl(farmer.photo_path) : profile;
 
                 card.innerHTML = `
                   <div class="farmer-img" style="display:flex;justify-content:center;align-items:center; overflow:hidden;">
