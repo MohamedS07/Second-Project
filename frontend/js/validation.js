@@ -1,4 +1,4 @@
-// ─── Loader injection ───────────────────────
+
 if (!document.getElementById('loader-script')) {
     const script = document.createElement('script');
     script.id = 'loader-script';
@@ -11,7 +11,7 @@ if (!document.getElementById('loader-script')) {
     document.head.appendChild(link);
 }
 
-// ─── Store farmerId globally for modal use ───
+
 let _farmerId = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // ── Verify admin role ──
+    
     try {
         const userResponse = await fetch(`${API_BASE_URL}/api/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error verifying user role:', error);
     }
 
-    // ── Fetch farmer details ──
+    
     try {
         const response = await fetch(`${API_BASE_URL}/api/farmers/${_farmerId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(err);
     }
 
-    // ── Image preview modal ──
+    
     const modalHtml = `
         <div id="imageModal" class="modal-overlay">
             <div class="modal-content">
@@ -77,13 +77,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
     document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-    // ── Button wiring ──
+    
     document.querySelector('.accept').addEventListener('click', () => handleValidation(_farmerId, 'approve'));
 
-    // Decline opens the reason modal instead of calling directly
+    
     document.querySelector('.decline').addEventListener('click', () => openDeclineModal());
 
-    // Character counter
+    
     const textarea = document.getElementById('declineReasonInput');
     if (textarea) {
         textarea.addEventListener('input', () => {
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// ─── Image modal ────────────────────────────
+
 function getFileUrl(path) {
     if (!path) return '';
     if (path.startsWith('http') || path.startsWith('data:')) {
@@ -117,7 +117,7 @@ window.onclick = function (event) {
     if (event.target == modal) closeModal();
 };
 
-// ─── Decline reason modal ────────────────────
+
 function openDeclineModal() {
     const modal = document.getElementById('declineModal');
     modal.style.display = 'flex';
@@ -129,7 +129,7 @@ function closeDeclineModal() {
     document.getElementById('declineModal').style.display = 'none';
 }
 
-// exposed to the confirm button in HTML
+
 window.closeDeclineModal = closeDeclineModal;
 
 window.confirmDecline = async function () {
@@ -142,7 +142,7 @@ window.confirmDecline = async function () {
     await handleValidation(_farmerId, 'delete', reason);
 };
 
-// ─── Render farmer details ───────────────────
+
 function renderFarmerDetails(farmer) {
     document.querySelector('.details').innerHTML = `
         <div style="width:200px; height:200px; background:#eee; display:flex; justify-content:center; align-items:center; color:#888; overflow:hidden;">
@@ -181,7 +181,7 @@ function renderFarmerDetails(farmer) {
     }
 }
 
-// ─── Handle approval or decline API call ─────
+
 async function handleValidation(id, action, declineReason = '') {
     const token = localStorage.getItem('token');
 
@@ -197,7 +197,7 @@ async function handleValidation(id, action, declineReason = '') {
             url = `${API_BASE_URL}/api/farmers/${id}/approve`;
             method = 'PUT';
         } else {
-            // decline — send reason as form data
+            
             url = `${API_BASE_URL}/api/farmers/${id}/decline`;
             method = 'PUT';
             const form = new FormData();

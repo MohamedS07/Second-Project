@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
 
-    // Inject Loader
+    
     if (!document.getElementById('loader-script')) {
         const script = document.createElement('script');
         script.id = 'loader-script';
